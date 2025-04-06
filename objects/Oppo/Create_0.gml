@@ -1,8 +1,8 @@
 global.DistLevel = 0;
 global.DistTime=0;
 global.DistLevelMax=100;
-Distracted = 7;
-OppoTimer = 7;
+Distracted = 8;
+OppoTimer = 8;
 global.DistTimer = time_source_create(OppoTimer, 7, time_source_units_seconds, Distracted, [], 1);
 DistBar_width=100;
 DistBar_height=12;
