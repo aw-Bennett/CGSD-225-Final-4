@@ -5,8 +5,9 @@
   "resources": [
     {"id":{"name":"sBackground","path":"sprites/sBackground/sBackground.yy",},"order":1,},
     {"id":{"name":"classic_cards_spr","path":"sprites/classic_cards_spr/classic_cards_spr.yy",},"order":0,},
-    {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":1,},
+    {"id":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},"order":1,},
     {"id":{"name":"oDeck","path":"objects/oDeck/oDeck.yy",},"order":1,},
+    {"id":{"name":"Reset_Game","path":"scripts/Reset_Game/Reset_Game.yy",},"order":1,},
     {"id":{"name":"DeckOfCards3","path":"objects/DeckOfCards3/DeckOfCards3.yy",},"order":2,},
     {"id":{"name":"DeckOfCards","path":"objects/DeckOfCards/DeckOfCards.yy",},"order":0,},
     {"id":{"name":"sCardBack","path":"sprites/sCardBack/sCardBack.yy",},"order":2,},
@@ -31,8 +32,8 @@
     "children": [],
   },
   "RoomOrderNodes": [
+    {"roomId":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
-    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
   ],
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Animation Curves","folderPath":"folders/Animation Curves.yy","order":12,},
