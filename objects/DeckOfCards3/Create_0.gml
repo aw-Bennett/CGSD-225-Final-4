@@ -2,7 +2,7 @@
 	game_state = "playing";
 	deck = ds_list_create();
 	discard_pile = ds_list_create();
-	 player_hand = ds_list_create();
+	player_hand = ds_list_create();
 	
 	
 	

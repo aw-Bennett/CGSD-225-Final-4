@@ -1,5 +1,5 @@
 // Player draws cards
-if (game_state == "playings") {
+if (game_state == "playing") {
     // Player draws a card if no Ace is pending
     if (!ace_pending && keyboard_check_pressed(vk_space)) {
         if (ds_list_size(deck) > 0) {
