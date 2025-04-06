@@ -4,6 +4,8 @@
 	discard_pile = ds_list_create();
 	
 	
+	
+	
 	CARDS_IN_DECK = 52;
 	cards_drawn = 0;
 	
