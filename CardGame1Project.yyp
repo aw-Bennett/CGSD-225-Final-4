@@ -9,10 +9,12 @@
     {"id":{"name":"DistBar","path":"objects/DistBar/DistBar.yy",},"order":6,},
     {"id":{"name":"sBackground","path":"sprites/sBackground/sBackground.yy",},"order":1,},
     {"id":{"name":"classic_cards_spr","path":"sprites/classic_cards_spr/classic_cards_spr.yy",},"order":0,},
+    {"id":{"name":"MoveRoomForTest","path":"objects/MoveRoomForTest/MoveRoomForTest.yy",},"order":7,},
     {"id":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},"order":1,},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":2,},
     {"id":{"name":"sCatTemp","path":"sprites/sCatTemp/sCatTemp.yy",},"order":7,},
     {"id":{"name":"Dist1u","path":"objects/Dist1u/Dist1u.yy",},"order":5,},
+    {"id":{"name":"DistTimeSource","path":"scripts/DistTimeSource/DistTimeSource.yy",},"order":1,},
     {"id":{"name":"sOppoDTemp","path":"sprites/sOppoDTemp/sOppoDTemp.yy",},"order":4,},
     {"id":{"name":"oDeck","path":"objects/oDeck/oDeck.yy",},"order":1,},
     {"id":{"name":"sOppoFTemp","path":"sprites/sOppoFTemp/sOppoFTemp.yy",},"order":3,},
@@ -42,9 +44,9 @@
     "children": [],
   },
   "RoomOrderNodes": [
-    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"roomId":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},},
+    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
   ],
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Animation Curves","folderPath":"folders/Animation Curves.yy","order":12,},
