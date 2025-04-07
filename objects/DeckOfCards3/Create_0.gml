@@ -10,6 +10,7 @@
 	cards_drawn = 0;
 	hand_total = 0;
 	
+	
 	ace_pending = false;
 	ace_index = -1;
 	card_values = ds_list_create(); 
