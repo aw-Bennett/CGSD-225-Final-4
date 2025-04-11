@@ -45,17 +45,24 @@ if (ace_pending) {
 
 
 // Final result banner
-draw_set_color(c_white);
 if (game_state == "win") {
+    draw_set_color(c_lime);
     draw_text(550, 325, "You Win!");
 } else if (game_state == "lose") {
+    draw_set_color(c_red);
     draw_text(550, 325, "Dealer Wins!");
 } else if (game_state == "tie") {
+    draw_set_color(c_yellow);
     draw_text(550, 325, "It's a Tie!");
 } else if (game_state == "bust") {
+    draw_set_color(c_orange);
     draw_text(550, 325, "You Bust! Dealer Wins!");
 } else if (game_state == "stand") {
+    draw_set_color(c_aqua);
     draw_text(550, 325, "You Stand. Waiting for Dealer...");
 }
 
-
+if (stand_blocked) {
+    draw_set_color(c_red);
+    draw_text(550, 365, "You must draw at least 2 cards before standing.");
+}

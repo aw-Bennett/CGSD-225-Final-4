@@ -12,6 +12,9 @@
 	
 	
 	ace_pending = false;
+	stand_blocked = false;
+	initial_draw_done = false;
+
 	ace_index = -1;
 	card_values = ds_list_create(); 
 	
