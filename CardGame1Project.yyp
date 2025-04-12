@@ -9,6 +9,7 @@
     {"id":{"name":"DistBar","path":"objects/DistBar/DistBar.yy",},"order":6,},
     {"id":{"name":"sBackground","path":"sprites/sBackground/sBackground.yy",},"order":1,},
     {"id":{"name":"classic_cards_spr","path":"sprites/classic_cards_spr/classic_cards_spr.yy",},"order":0,},
+    {"id":{"name":"DistTimeCheck","path":"scripts/DistTimeCheck/DistTimeCheck.yy",},"order":2,},
     {"id":{"name":"MoveRoomForTest","path":"objects/MoveRoomForTest/MoveRoomForTest.yy",},"order":7,},
     {"id":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},"order":1,},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":2,},
