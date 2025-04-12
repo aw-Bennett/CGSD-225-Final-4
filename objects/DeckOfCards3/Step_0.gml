@@ -24,6 +24,15 @@ if (game_state == "playing" && !initial_draw_done) {
         hand_total += card_values[| i];
     }
 
+    // Check for a split opportunity
+    if (ds_list_size(player_hand) == 2) {
+        var card1 = player_hand[| 0];
+        var card2 = player_hand[| 1];
+        if (card1 mod 13 == card2 mod 13) {
+            split_prompt = true;
+        }
+    }
+
     // Dealer draws 2 cards
     for (var i = 0; i < 2; ++i) {
         if (ds_list_size(deck) > 0) {
@@ -41,30 +50,66 @@ if (game_state == "playing" && !initial_draw_done) {
     }
 
     initial_draw_done = true;
+    split_draw_done = false;
+    active_hand = "original";
+    resumed_original_after_split = false;
 }
 
-// Player draws cards
+// Player draws 2 cards
 if (game_state == "playing") {
     if (!ace_pending && keyboard_check_pressed(vk_space)) {
         if (ds_list_size(deck) > 0) {
             stand_blocked = false;
             var drawn_card = deck[| 0];
             ds_list_delete(deck, 0);
-            ds_list_add(player_hand, drawn_card); 
 
-            // Check for Ace
-            if (drawn_card mod 13 == 0) {
-                ace_pending = true;
-                ace_index = ds_list_size(player_hand) - 1; 
+            if (split_hand_active) {
+                if (active_hand == "original" && !split_draw_done) {
+                    ds_list_add(player_hand, drawn_card);
+                    split_draw_done = true;
+
+                    if (drawn_card mod 13 == 0) {
+                        ace_pending = true;
+                        ace_index = ds_list_size(player_hand) - 1;
+                    } else {
+                        var value = get_card_value(drawn_card, hand_total);
+                        ds_list_add(card_values, value);
+                    }
+
+                    // Recalculate total
+                    hand_total = 0;
+                    for (var i = 0; i < ds_list_size(card_values); ++i) {
+                        hand_total += card_values[| i];
+                    }
+
+                } else if (active_hand == "split") {
+    var split_hand = split_hands[| 0];
+    ds_list_add(split_hand, drawn_card);
+
+    var split_value = get_card_value(drawn_card, 0);
+    global.split_hand_values[| 0] += split_value;
+
+    // Automatically return to original hand after one draw on split hand
+    active_hand = "original";
+    resumed_original_after_split = true;
+}
+
             } else {
-                var value = get_card_value(drawn_card, hand_total);
-                ds_list_add(card_values, value);
-            }
+                ds_list_add(player_hand, drawn_card);
 
-            // Recalculate total
-            hand_total = 0;
-            for (var i = 0; i < ds_list_size(card_values); ++i) {
-                hand_total += card_values[| i];
+                if (drawn_card mod 13 == 0) {
+                    ace_pending = true;
+                    ace_index = ds_list_size(player_hand) - 1;
+                } else {
+                    var value = get_card_value(drawn_card, hand_total);
+                    ds_list_add(card_values, value);
+                }
+
+                // Recalculate total
+                hand_total = 0;
+                for (var i = 0; i < ds_list_size(card_values); ++i) {
+                    hand_total += card_values[| i];
+                }
             }
 
             if (hand_total == 21) game_state = "win";
@@ -94,29 +139,70 @@ if (game_state == "playing") {
     }
 }
 
-// Player stands
+if (keyboard_check_pressed(ord("X"))) {
+    if (split_count < 3 && ds_list_size(player_hand) == 2) {
+        var card1 = player_hand[| 0];
+        var card2 = player_hand[| 1];
+
+        ds_list_delete(player_hand, 1);
+        var new_split_hand = ds_list_create();
+        ds_list_add(new_split_hand, card2);
+        ds_list_add(split_hands, new_split_hand);
+
+        ds_list_clear(card_values);
+        var value = get_card_value(card1, 0);
+        ds_list_add(card_values, value);
+        hand_total = value;
+
+        if (!variable_global_exists("split_hand_values")) {
+            global.split_hand_values = ds_list_create();
+        }
+        ds_list_add(global.split_hand_values, get_card_value(card2, 0));
+
+        split_count += 1;
+        split_hand_active = true;
+        split_prompt = false;
+        split_draw_done = false;
+        active_hand = "original";
+    }
+}
+
+// Transition to split hand after drawing one time to original
+if (split_hand_active && split_draw_done && active_hand == "original") {
+    active_hand = "split";
+}
+
+// After finishing split hand, return to original for full play
+else if (split_hand_active && keyboard_check_pressed(ord("S")) && active_hand == "split") {
+    active_hand = "original";
+    resumed_original_after_split = true;
+}
+
+// When original cards resumes after split, allow it to play normally
+if (resumed_original_after_split) {
+    split_hand_active = false; 
+    resumed_original_after_split = false; 
+    // Now the original can keep drawing or standing like normal
+}
+
 if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     if (ds_list_size(player_hand) >= 2) {
         game_state = "stand";
         dealer_turn = true;
         stand_blocked = false;
     } else {
-        stand_blocked = true; 
+        stand_blocked = true;
     }
 }
 
-
-// If the dealer's total is 17 or more and the player has a lower score, dealer wins without drawing any more cards
 if (dealer_turn && !dealer_done) {
     if (hand_total < dealer_total) {
-        // Dealer wins immediately if player's total is lower
         game_state = "lose";
         dealer_done = true;
         return;
     }
 
     if (dealer_total >= 17) {
-        // If the dealer has 17 or more, check for outcome immediately
         if (dealer_total > hand_total) {
             game_state = "lose";
         } else if (dealer_total < hand_total) {
@@ -126,7 +212,6 @@ if (dealer_turn && !dealer_done) {
         }
         dealer_done = true;
     } else {
-        // Dealer draws if their total is below 17
         while (dealer_total < 17 && ds_list_size(deck) > 0) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
@@ -152,7 +237,6 @@ if (dealer_turn && !dealer_done) {
             }
         }
 
-        // If dealer's total is now 17 or more
         if (dealer_total >= 17) {
             dealer_done = true;
             if (dealer_total > hand_total) {
