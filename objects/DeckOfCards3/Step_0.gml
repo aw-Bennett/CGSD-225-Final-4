@@ -53,20 +53,21 @@ if (game_state == "playing" && !initial_draw_done) {
     split_draw_done = false;
     active_hand = "original";
     resumed_original_after_split = false;
+    drew_once_post_split = false;
+    show_stand_prompt = false;
+    waiting_for_split_stand = false;
 }
-
-// Player draws 2 cards
+//player draws 2 cards
 if (game_state == "playing") {
     if (!ace_pending && keyboard_check_pressed(vk_space)) {
-        if (ds_list_size(deck) > 0) {
+        if (ds_list_size(deck) > 0 && !show_stand_prompt && !waiting_for_split_stand) {
             stand_blocked = false;
             var drawn_card = deck[| 0];
             ds_list_delete(deck, 0);
 
             if (split_hand_active) {
-                if (active_hand == "original" && !split_draw_done) {
+                if (active_hand == "original" && resumed_original_after_split && !drew_once_post_split) {
                     ds_list_add(player_hand, drawn_card);
-                    split_draw_done = true;
 
                     if (drawn_card mod 13 == 0) {
                         ace_pending = true;
@@ -76,23 +77,26 @@ if (game_state == "playing") {
                         ds_list_add(card_values, value);
                     }
 
-                    // Recalculate total
                     hand_total = 0;
                     for (var i = 0; i < ds_list_size(card_values); ++i) {
                         hand_total += card_values[| i];
                     }
 
-                } else if (active_hand == "split") {
-    var split_hand = split_hands[| 0];
-    ds_list_add(split_hand, drawn_card);
+                    drew_once_post_split = true;
+                    show_stand_prompt = true;
+                    waiting_for_split_stand = true;
 
-    var split_value = get_card_value(drawn_card, 0);
-    global.split_hand_values[| 0] += split_value;
+                } else if (active_hand == "split" && !split_draw_done) {
+                    var split_hand = split_hands[| 0];
+                    ds_list_add(split_hand, drawn_card);
 
-    // Automatically return to original hand after one draw on split hand
-    active_hand = "original";
-    resumed_original_after_split = true;
-}
+                    var split_value = get_card_value(drawn_card, 0);
+                    global.split_hand_values[| 0] += split_value;
+
+                    active_hand = "original";
+                    resumed_original_after_split = true;
+                    split_draw_done = true;
+                }
 
             } else {
                 ds_list_add(player_hand, drawn_card);
@@ -105,7 +109,6 @@ if (game_state == "playing") {
                     ds_list_add(card_values, value);
                 }
 
-                // Recalculate total
                 hand_total = 0;
                 for (var i = 0; i < ds_list_size(card_values); ++i) {
                     hand_total += card_values[| i];
@@ -117,7 +120,6 @@ if (game_state == "playing") {
         }
     }
 
-    // Handle Ace choice
     if (ace_pending) {
         if (keyboard_check_pressed(ord("1"))) {
             ds_list_add(card_values, 1);
@@ -135,6 +137,22 @@ if (game_state == "playing") {
 
             if (hand_total == 21) game_state = "win";
             else if (hand_total > 21) game_state = "bust";
+        }
+    }
+
+    // Handle stand prompt
+    if (show_stand_prompt) {
+        draw_text(100, 100, "Would you like to stand? Press Y or N");
+
+        if (keyboard_check_pressed(ord("Y"))) {
+            game_state = "stand";
+            dealer_turn = true;
+            show_stand_prompt = false;
+            waiting_for_split_stand = false;
+        } else if (keyboard_check_pressed(ord("N"))) {
+            show_stand_prompt = false;
+            waiting_for_split_stand = false;
+            active_hand = "split";
         }
     }
 }
@@ -163,26 +181,15 @@ if (keyboard_check_pressed(ord("X"))) {
         split_hand_active = true;
         split_prompt = false;
         split_draw_done = false;
-        active_hand = "original";
+        active_hand = "split";
+        drew_once_post_split = false;
     }
 }
 
-// Transition to split hand after drawing one time to original
-if (split_hand_active && split_draw_done && active_hand == "original") {
+if (split_hand_active && split_draw_done && active_hand == "original" && drew_once_post_split) {
     active_hand = "split";
-}
-
-// After finishing split hand, return to original for full play
-else if (split_hand_active && keyboard_check_pressed(ord("S")) && active_hand == "split") {
-    active_hand = "original";
-    resumed_original_after_split = true;
-}
-
-// When original cards resumes after split, allow it to play normally
-if (resumed_original_after_split) {
-    split_hand_active = false; 
-    resumed_original_after_split = false; 
-    // Now the original can keep drawing or standing like normal
+    resumed_original_after_split = false;
+    drew_once_post_split = false;
 }
 
 if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
@@ -195,6 +202,68 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     }
 }
 
+//Reset game function
+if (keyboard_check_pressed(ord("R"))) {
+    // Destroy all player-related data
+    if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
+    if (ds_exists(dealer_hand, ds_type_list)) ds_list_clear(dealer_hand);
+    if (ds_exists(card_values, ds_type_list)) ds_list_clear(card_values);
+
+    // Split hand values
+    if (variable_global_exists("split_hand_values")) {
+        if (ds_exists(global.split_hand_values, ds_type_list)) ds_list_clear(global.split_hand_values);
+    }
+
+    // Destroy all split hands
+    if (variable_global_exists("split_hands")) {
+        for (var i = 0; i < ds_list_size(split_hands); ++i) {
+            var sh = split_hands[| i];
+            if (ds_exists(sh, ds_type_list)) ds_list_destroy(sh);
+        }
+        ds_list_destroy(split_hands);
+    }
+    global.split_hands = ds_list_create();
+
+    // Reset deck
+    if (ds_exists(deck, ds_type_list)) ds_list_clear(deck);
+    else deck = ds_list_create();
+
+    for (var i = 0; i < 52; ++i) ds_list_add(deck, i);
+
+    // Shuffle deck
+    for (var i = ds_list_size(deck) - 1; i > 0; --i) {
+        var j = irandom(i);
+        var temp = deck[| i];
+        deck[| i] = deck[| j];
+        deck[| j] = temp;
+    }
+
+    // Reset all game state variables
+    hand_total = 0;
+    dealer_total = 0;
+    initial_draw_done = false;
+    ace_pending = false;
+    ace_index = -1;
+
+    split_count = 0;
+    split_prompt = false;
+    split_hand_active = false;
+    split_draw_done = false;
+    active_hand = "original";
+    resumed_original_after_split = false;
+    drew_once_post_split = false;
+
+    show_stand_prompt = false;
+    waiting_for_split_stand = false;
+    dealer_turn = false;
+    dealer_done = false;
+    stand_blocked = false;
+
+    game_state = "playing";
+}
+
+
+//dealer logic after player turn
 if (dealer_turn && !dealer_done) {
     if (hand_total < dealer_total) {
         game_state = "lose";
@@ -248,4 +317,4 @@ if (dealer_turn && !dealer_done) {
             }
         }
     }
-}
+} 

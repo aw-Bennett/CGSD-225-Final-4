@@ -7,8 +7,8 @@ var maxCardsPerRow = 10;
 // Draw the discard pile 
 for (var i = 0; i < ds_list_size(discard_pile); ++i) {
     var card_index = discard_pile[| i];
-    var dx = -1000;
-    var dy = -1000;
+    var dx = -1000;  
+    var dy = -1000;  
     draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
 }
 
@@ -66,6 +66,12 @@ if (ace_pending) {
 if (split_prompt) {
     draw_set_color(c_yellow);
     draw_text(x, y + 220, "You can split your hand! Press 'X' to split.");
+}
+
+// Stand prompt after split
+if (resumed_original_after_split) {
+    draw_set_color(c_yellow);
+    draw_text(x, y + 250, "Would you like to stand? Press Y for Yes, N for No.");
 }
 
 // Final result banner
