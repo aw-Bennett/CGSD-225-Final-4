@@ -116,8 +116,19 @@ if (game_state == "playing") {
                 }
             }
 
-            if (hand_total == 21) game_state = "win";
-            else if (hand_total > 21) game_state = "bust";
+            
+            if (hand_total == 21) {
+                if (dealer_total == 21) {
+                    game_state = "tie";
+                    dealer_done = true;
+                    dealer_turn = false;
+                } else {
+                    game_state = "win";
+                    dealer_turn = true;  // Dealer starts drawing cards automatically
+                }
+            } else if (hand_total > 21) {
+                game_state = "bust";
+            }
         }
     }
 
@@ -136,8 +147,19 @@ if (game_state == "playing") {
                 hand_total += card_values[| i];
             }
 
-            if (hand_total == 21) game_state = "win";
-            else if (hand_total > 21) game_state = "bust";
+           
+            if (hand_total == 21) {
+                if (dealer_total == 21) {
+                    game_state = "tie";
+                    dealer_done = true;
+                    dealer_turn = false;
+                } else {
+                    game_state = "win";
+                    dealer_turn = true;  // Dealer starts drawing cards automatically
+                }
+            } else if (hand_total > 21) {
+                game_state = "bust";
+            }
         }
     }
 
@@ -147,10 +169,11 @@ if (game_state == "playing") {
 
         if (keyboard_check_pressed(ord("Y"))) {
             game_state = "stand";
-            dealer_turn = true;
+            dealer_turn = true;  // Force dealer turn after player stands
             show_stand_prompt = false;
             waiting_for_split_stand = false;
         } else if (keyboard_check_pressed(ord("N"))) {
+            // Continue to next pile if split hand, else just continue with the original hand
             show_stand_prompt = false;
             waiting_for_split_stand = false;
             active_hand = "split"; // Move to next pile
@@ -202,7 +225,7 @@ if (split_hand_active && split_draw_done && active_hand == "original" && drew_on
 if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     if (ds_list_size(player_hand) >= 2) {
         game_state = "stand";
-        dealer_turn = true;
+        dealer_turn = true; // Force dealer turn after player stands
         stand_blocked = false;
     } else {
         stand_blocked = true;
@@ -268,25 +291,34 @@ if (keyboard_check_pressed(ord("R"))) {
 
     game_state = "playing";
 }
-//added back in dealer logic as it deleted it by accident lol
-if (dealer_turn && !dealer_done) {
-    if (hand_total < dealer_total && game_state == "stand") {
-        game_state = "lose";
-        dealer_done = true;
-        return;
-    }
 
-    if (dealer_total >= 17) {
-        if (dealer_total > hand_total) {
-            game_state = "lose";
-        } else if (dealer_total < hand_total) {
-            game_state = "win";
-        } else {
-            game_state = "tie";
+// Dealer logic
+if (dealer_turn && !dealer_done) {
+    // Case 1: If the player stands with a lower score than the dealer, stop dealer's turn
+    if (game_state == "stand" && hand_total < dealer_total) {
+        dealer_done = true; // Stop dealer from drawing cards
+    } 
+    // Case 2: If the player has hit 21, dealer should still draw if under 17
+    else if (hand_total == 21) {
+        if (dealer_total < 17) {
+            // Dealer must draw cards until total >= 17
+            while (dealer_total < 17 && ds_list_size(deck) > 0) {
+                var dealer_card = deck[| 0];
+                ds_list_delete(deck, 0);
+                ds_list_add(dealer_hand, dealer_card);
+
+                var dealer_card_value = get_card_value(dealer_card, dealer_total);
+                if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
+                    dealer_card_value = 11;
+                }
+
+                dealer_total += dealer_card_value;
+            }
         }
-        dealer_done = true;
-    } else {
-        // Only draw if dealer is below 17 and not already winning
+    } 
+    // Case 3: Dealer draws if total < 17 and the player has not yet stood or hit 21
+    else if (dealer_total < 17) {
+        // Dealer must draw cards until total >= 17
         while (dealer_total < 17 && ds_list_size(deck) > 0) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
@@ -294,22 +326,23 @@ if (dealer_turn && !dealer_done) {
 
             var dealer_card_value = get_card_value(dealer_card, dealer_total);
             if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
-                dealer_card_value = 11;
+                dealer_card_value = 11; // Ace handling
             }
 
             dealer_total += dealer_card_value;
         }
-
-        if (dealer_total > 21) {
-            game_state = "win";
-        } else if (dealer_total > hand_total) {
-            game_state = "lose";
-        } else if (dealer_total < hand_total) {
-            game_state = "win";
-        } else {
-            game_state = "tie";
-        }
-
-        dealer_done = true;
     }
+
+    // Determine the result of the game after dealer's turn
+    if (dealer_total > 21) {
+        game_state = "win"; // Dealer busts, player wins
+    } else if (dealer_total > hand_total) {
+        game_state = "lose"; // Dealer wins
+    } else if (dealer_total < hand_total) {
+        game_state = "win"; // Player wins
+    } else {
+        game_state = "tie"; // Tie game
+    }
+
+    dealer_done = true;
 }
