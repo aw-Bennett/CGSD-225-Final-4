@@ -24,7 +24,7 @@ if (game_state == "playing" && !initial_draw_done) {
         hand_total += card_values[| i];
     }
 
-    // Check for a split opportunity
+    // Check for a split opportunity (only if both cards are the same rank)
     if (ds_list_size(player_hand) == 2) {
         var card1 = player_hand[| 0];
         var card2 = player_hand[| 1];
@@ -57,8 +57,9 @@ if (game_state == "playing" && !initial_draw_done) {
     show_stand_prompt = false;
     waiting_for_split_stand = false;
 }
-//player draws 2 cards
+
 if (game_state == "playing") {
+    // Handle player's turn
     if (!ace_pending && keyboard_check_pressed(vk_space)) {
         if (ds_list_size(deck) > 0 && !show_stand_prompt && !waiting_for_split_stand) {
             stand_blocked = false;
@@ -152,40 +153,46 @@ if (game_state == "playing") {
         } else if (keyboard_check_pressed(ord("N"))) {
             show_stand_prompt = false;
             waiting_for_split_stand = false;
-            active_hand = "split";
+            active_hand = "split"; // Move to next pile
         }
     }
 }
 
+// Split logic for pressing X
 if (keyboard_check_pressed(ord("X"))) {
     if (split_count < 3 && ds_list_size(player_hand) == 2) {
         var card1 = player_hand[| 0];
         var card2 = player_hand[| 1];
 
-        ds_list_delete(player_hand, 1);
-        var new_split_hand = ds_list_create();
-        ds_list_add(new_split_hand, card2);
-        ds_list_add(split_hands, new_split_hand);
+        // Only allow split if cards are of the same rank
+        if (card1 mod 13 == card2 mod 13) {
+            ds_list_delete(player_hand, 1);
+            var new_split_hand = ds_list_create();
+            ds_list_add(new_split_hand, card2);
+            ds_list_add(split_hands, new_split_hand);
 
-        ds_list_clear(card_values);
-        var value = get_card_value(card1, 0);
-        ds_list_add(card_values, value);
-        hand_total = value;
+            // Recalculate card values for split hands
+            ds_list_clear(card_values);
+            var value = get_card_value(card1, 0);
+            ds_list_add(card_values, value);
+            hand_total = value;
 
-        if (!variable_global_exists("split_hand_values")) {
-            global.split_hand_values = ds_list_create();
+            if (!variable_global_exists("split_hand_values")) {
+                global.split_hand_values = ds_list_create();
+            }
+            ds_list_add(global.split_hand_values, get_card_value(card2, 0));
+
+            split_count += 1;
+            split_hand_active = true;
+            split_prompt = false;
+            split_draw_done = false;
+            active_hand = "split";
+            drew_once_post_split = false;
         }
-        ds_list_add(global.split_hand_values, get_card_value(card2, 0));
-
-        split_count += 1;
-        split_hand_active = true;
-        split_prompt = false;
-        split_draw_done = false;
-        active_hand = "split";
-        drew_once_post_split = false;
     }
 }
 
+// Handle the flow of splitting and switching hands
 if (split_hand_active && split_draw_done && active_hand == "original" && drew_once_post_split) {
     active_hand = "split";
     resumed_original_after_split = false;
@@ -202,7 +209,7 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     }
 }
 
-//Reset game function
+// Reset game function (R key)
 if (keyboard_check_pressed(ord("R"))) {
     // Destroy all player-related data
     if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
@@ -214,7 +221,7 @@ if (keyboard_check_pressed(ord("R"))) {
         if (ds_exists(global.split_hand_values, ds_type_list)) ds_list_clear(global.split_hand_values);
     }
 
-    // Destroy all split hands
+    // Destroy all split hands and recreate the list
     if (variable_global_exists("split_hands")) {
         for (var i = 0; i < ds_list_size(split_hands); ++i) {
             var sh = split_hands[| i];
@@ -261,11 +268,9 @@ if (keyboard_check_pressed(ord("R"))) {
 
     game_state = "playing";
 }
-
-
-//dealer logic after player turn
+//added back in dealer logic as it deleted it by accident lol
 if (dealer_turn && !dealer_done) {
-    if (hand_total < dealer_total) {
+    if (hand_total < dealer_total && game_state == "stand") {
         game_state = "lose";
         dealer_done = true;
         return;
@@ -281,40 +286,30 @@ if (dealer_turn && !dealer_done) {
         }
         dealer_done = true;
     } else {
+        // Only draw if dealer is below 17 and not already winning
         while (dealer_total < 17 && ds_list_size(deck) > 0) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
             ds_list_add(dealer_hand, dealer_card);
 
             var dealer_card_value = get_card_value(dealer_card, dealer_total);
-            if ((dealer_card mod 13 == 0) && (dealer_total + 11 <= 21)) {
+            if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
                 dealer_card_value = 11;
             }
 
             dealer_total += dealer_card_value;
-
-            if (dealer_total == 21) {
-                game_state = "lose";
-                dealer_done = true;
-                return;
-            }
-
-            if (dealer_total > 21) {
-                game_state = "win";
-                dealer_done = true;
-                return;
-            }
         }
 
-        if (dealer_total >= 17) {
-            dealer_done = true;
-            if (dealer_total > hand_total) {
-                game_state = "lose";
-            } else if (dealer_total < hand_total) {
-                game_state = "win";
-            } else {
-                game_state = "tie";
-            }
+        if (dealer_total > 21) {
+            game_state = "win";
+        } else if (dealer_total > hand_total) {
+            game_state = "lose";
+        } else if (dealer_total < hand_total) {
+            game_state = "win";
+        } else {
+            game_state = "tie";
         }
+
+        dealer_done = true;
     }
-} 
+}
