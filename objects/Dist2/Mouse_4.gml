@@ -1,0 +1,1 @@
+instance_change(Dist2u, true);
