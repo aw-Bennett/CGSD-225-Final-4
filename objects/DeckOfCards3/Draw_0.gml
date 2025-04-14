@@ -18,6 +18,7 @@ for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
     var dx = 250 + (i * 130);
     var dy = y - 150;
     draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
+	//audio_play_sound(snd_CardDrawn, 0, false);
 }
 
 // Draw dealer total
@@ -30,6 +31,7 @@ for (var i = 0; i < ds_list_size(player_hand); ++i) {
     var dx = 250 + (i * 130);
     var dy = y + 170;
     draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
+	//audio_play_sound(snd_CardDrawn, 0, false);
 }
 
 // Draw split hands if any

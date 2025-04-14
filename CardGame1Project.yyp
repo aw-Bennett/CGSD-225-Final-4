@@ -28,6 +28,7 @@
     {"id":{"name":"oDeck","path":"objects/oDeck/oDeck.yy",},"order":1,},
     {"id":{"name":"sCoinSlot","path":"sprites/sCoinSlot/sCoinSlot.yy",},"order":12,},
     {"id":{"name":"snd_DeckShuffle","path":"sounds/snd_DeckShuffle/snd_DeckShuffle.yy",},"order":1,},
+    {"id":{"name":"InPlayMusicPlayer","path":"objects/InPlayMusicPlayer/InPlayMusicPlayer.yy",},"order":14,},
     {"id":{"name":"sOppoFTemp","path":"sprites/sOppoFTemp/sOppoFTemp.yy",},"order":3,},
     {"id":{"name":"sForku","path":"sprites/sForku/sForku.yy",},"order":16,},
     {"id":{"name":"sDistBarFrame","path":"sprites/sDistBarFrame/sDistBarFrame.yy",},"order":6,},
@@ -40,6 +41,7 @@
     {"id":{"name":"get_card_value","path":"scripts/get_card_value/get_card_value.yy",},"order":0,},
     {"id":{"name":"Dist2","path":"objects/Dist2/Dist2.yy",},"order":12,},
     {"id":{"name":"sArrowD","path":"sprites/sArrowD/sArrowD.yy",},"order":13,},
+    {"id":{"name":"snd_SmallSampleJazz","path":"sounds/snd_SmallSampleJazz/snd_SmallSampleJazz.yy",},"order":2,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
   "Options": [
