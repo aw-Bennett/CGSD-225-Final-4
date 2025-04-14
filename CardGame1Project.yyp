@@ -34,8 +34,6 @@
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":2,},
     {"id":{"name":"DistTimeSource","path":"scripts/DistTimeSource/DistTimeSource.yy",},"order":1,},
     {"id":{"name":"sOppoDTemp","path":"sprites/sOppoDTemp/sOppoDTemp.yy",},"order":4,},
-    {"id":{"name":"DeckOfCards_1","path":"objects/DeckOfCards_1/DeckOfCards_1.yy",},"order":15,},
-    {"id":{"name":"DeckOfCards3_1","path":"objects/DeckOfCards3_1/DeckOfCards3_1.yy",},"order":17,},
     {"id":{"name":"sFork","path":"sprites/sFork/sFork.yy",},"order":15,},
     {"id":{"name":"oDeck","path":"objects/oDeck/oDeck.yy",},"order":1,},
     {"id":{"name":"sCoinSlot","path":"sprites/sCoinSlot/sCoinSlot.yy",},"order":12,},
@@ -78,9 +76,9 @@
     "children": [],
   },
   "RoomOrderNodes": [
+    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
     {"roomId":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
-    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
   ],
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Animation Curves","folderPath":"folders/Animation Curves.yy","order":12,},

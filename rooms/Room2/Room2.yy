@@ -17,9 +17,7 @@
   ],
   "layers": [
     {"resourceType":"GMRInstanceLayer","resourceVersion":"1.0","name":"Instances","instances":[
-        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_2FFCE00D","properties":[],"isDnd":false,"objectId":{"name":"DeckOfCards_1","path":"objects/DeckOfCards_1/DeckOfCards_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.15,"scaleY":0.15,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":544.0,"y":544.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_52E5087","properties":[],"isDnd":false,"objectId":{"name":"oDeck_1","path":"objects/oDeck_1/oDeck_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.12238,"scaleY":0.1198,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":608.0,"y":374.0,},
-        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_268B36E7","properties":[],"isDnd":false,"objectId":{"name":"DeckOfCards3_1","path":"objects/DeckOfCards3_1/DeckOfCards3_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.15,"scaleY":-0.15,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":544.0,"y":320.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_65C84FA1","properties":[],"isDnd":false,"objectId":{"name":"Oppo_1","path":"objects/Oppo_1/Oppo_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.5,"scaleY":1.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":544.0,"y":32.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_5F7EF4D4","properties":[],"isDnd":false,"objectId":{"name":"DistBar_1","path":"objects/DistBar_1/DistBar_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":768.0,"y":32.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_4ADEAF75","properties":[],"isDnd":false,"objectId":{"name":"Dist1_1","path":"objects/Dist1_1/Dist1_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.15,"scaleY":0.15,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":800.0,"y":576.0,},
@@ -27,6 +25,7 @@
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_3A59CD98","properties":[],"isDnd":false,"objectId":{"name":"CoinSlotO_1","path":"objects/CoinSlotO_1/CoinSlotO_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.25,"scaleY":0.25,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":672.0,"y":320.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_11C1A638","properties":[],"isDnd":false,"objectId":{"name":"CoinS_1","path":"objects/CoinS_1/CoinS_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.44,"scaleY":0.44,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":666.0,"y":514.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_2A378F28","properties":[],"isDnd":false,"objectId":{"name":"CoinS_1","path":"objects/CoinS_1/CoinS_1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.44,"scaleY":0.44,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":676.0,"y":514.0,},
+        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_3C61EB6A","properties":[],"isDnd":false,"objectId":{"name":"DeckOfCards3","path":"objects/DeckOfCards3/DeckOfCards3.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":576.0,"y":352.0,},
       ],"visible":true,"depth":0,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
     {"resourceType":"GMRBackgroundLayer","resourceVersion":"1.0","name":"Background","spriteId":{"name":"sBackground_1","path":"sprites/sBackground_1/sBackground_1.yy",},"colour":4294967295,"x":0,"y":0,"htiled":false,"vtiled":false,"hspeed":0.0,"vspeed":0.0,"stretch":false,"animationFPS":30.0,"animationSpeedType":0,"userdefinedAnimFPS":false,"visible":true,"depth":100,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
   ],
@@ -34,9 +33,7 @@
   "creationCodeFile": "",
   "inheritCode": false,
   "instanceCreationOrder": [
-    {"name":"inst_2FFCE00D","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_52E5087","path":"rooms/Room2/Room2.yy",},
-    {"name":"inst_268B36E7","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_65C84FA1","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_5F7EF4D4","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_4ADEAF75","path":"rooms/Room2/Room2.yy",},
@@ -44,6 +41,7 @@
     {"name":"inst_3A59CD98","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_11C1A638","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_2A378F28","path":"rooms/Room2/Room2.yy",},
+    {"name":"inst_3C61EB6A","path":"rooms/Room2/Room2.yy",},
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
