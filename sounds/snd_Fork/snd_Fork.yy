@@ -1,7 +1,7 @@
 {
   "resourceType": "GMSound",
   "resourceVersion": "1.0",
-  "name": "ForkMp3",
+  "name": "snd_Fork",
   "conversionMode": 0,
   "compression": 0,
   "volume": 1.0,
@@ -14,7 +14,7 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "ForkMp3.mp3",
+  "soundFile": "snd_Fork.mp3",
   "duration": 1.285292,
   "parent": {
     "name": "Sounds",

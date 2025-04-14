@@ -5,7 +5,6 @@
   "resources": [
     {"id":{"name":"sArrowD","path":"sprites/sArrowD/sArrowD.yy",},"order":24,},
     {"id":{"name":"sCatuTemp","path":"sprites/sCatuTemp/sCatuTemp.yy",},"order":8,},
-    {"id":{"name":"ForkWav","path":"sounds/ForkWav/ForkWav.yy",},"order":3,},
     {"id":{"name":"CoinSlotP_1","path":"objects/CoinSlotP_1/CoinSlotP_1.yy",},"order":21,},
     {"id":{"name":"Dist1","path":"objects/Dist1/Dist1.yy",},"order":4,},
     {"id":{"name":"sArrowL","path":"sprites/sArrowL/sArrowL.yy",},"order":25,},
@@ -35,7 +34,7 @@
     {"id":{"name":"Dist1u","path":"objects/Dist1u/Dist1u.yy",},"order":5,},
     {"id":{"name":"sOppoFTemp_1","path":"sprites/sOppoFTemp_1/sOppoFTemp_1.yy",},"order":19,},
     {"id":{"name":"sBackground_1","path":"sprites/sBackground_1/sBackground_1.yy",},"order":23,},
-    {"id":{"name":"ForkMp3","path":"sounds/ForkMp3/ForkMp3.yy",},"order":4,},
+    {"id":{"name":"snd_Fork","path":"sounds/snd_Fork/snd_Fork.yy",},"order":4,},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":2,},
     {"id":{"name":"DistTimeSource","path":"scripts/DistTimeSource/DistTimeSource.yy",},"order":1,},
     {"id":{"name":"sOppoDTemp","path":"sprites/sOppoDTemp/sOppoDTemp.yy",},"order":4,},
