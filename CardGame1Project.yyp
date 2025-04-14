@@ -17,7 +17,6 @@
     {"id":{"name":"MoveRoomForTest","path":"objects/MoveRoomForTest/MoveRoomForTest.yy",},"order":7,},
     {"id":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},"order":1,},
     {"id":{"name":"CoinSlotP","path":"objects/CoinSlotP/CoinSlotP.yy",},"order":10,},
-    {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":2,},
     {"id":{"name":"CoinS","path":"objects/CoinS/CoinS.yy",},"order":9,},
     {"id":{"name":"sCatTemp","path":"sprites/sCatTemp/sCatTemp.yy",},"order":7,},
     {"id":{"name":"Dist2u","path":"objects/Dist2u/Dist2u.yy",},"order":13,},
@@ -62,7 +61,6 @@
     "children": [],
   },
   "RoomOrderNodes": [
-    {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
     {"roomId":{"name":"GameRoom","path":"rooms/GameRoom/GameRoom.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],

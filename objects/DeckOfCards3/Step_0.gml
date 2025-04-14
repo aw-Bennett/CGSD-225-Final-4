@@ -1,3 +1,43 @@
+if (game_state == "betting") {
+    // Increase/decrease bet
+    if (keyboard_check_pressed(vk_right)) {
+        if (global.current_bet + 50 <= global.player_money) {
+            global.current_bet += 50;
+        }
+    }
+    if (keyboard_check_pressed(vk_left)) {
+        if (global.current_bet - 50 >= 0) {
+            global.current_bet -= 50;
+        }
+    }
+
+    // Check if player confirms bet
+    if (keyboard_check_pressed(vk_enter)) {
+        if (global.current_bet > 0 && global.current_bet <= global.player_money) {
+            global.total_chips_bet += global.current_bet; //<-- Only add here
+            global.player_money -= global.current_bet;
+            game_state = "playing";
+        }
+    }
+
+    // How many coins should exist based on chips bet?
+    var coins_should_exist = floor(global.total_chips_bet / 50);
+
+    // How many coins already exist?
+    var coins_exist = instance_number(CoinS);
+
+    // Spawn coins as needed
+    while (coins_exist < coins_should_exist) {
+        var x_pos = 20 + (coins_exist * 40); // spread coins horizontally
+        var y_pos = 100; // adjust if needed
+        instance_create_layer(x_pos, y_pos, "Instances", CoinS);
+        coins_exist += 1;
+    }
+
+    // Exit early to block gameplay input while betting
+    return;
+}
+
 // Initial draw at game start
 if (game_state == "playing" && !initial_draw_done) {
     // Player draws 2 cards
@@ -268,6 +308,11 @@ if (keyboard_check_pressed(ord("R"))) {
         deck[| j] = temp;
     }
 
+    // Destroy all CoinT instances
+    with (CoinS) {
+        instance_destroy();
+    }
+
     // Reset all game state variables
     hand_total = 0;
     dealer_total = 0;
@@ -288,8 +333,10 @@ if (keyboard_check_pressed(ord("R"))) {
     dealer_turn = false;
     dealer_done = false;
     stand_blocked = false;
-
-    game_state = "playing";
+	global.current_bet = 0;
+	global.player_money = 1000;
+    global.total_chips_bet = 0;
+    game_state = "betting";
 }
 
 // Dealer logic
@@ -345,4 +392,14 @@ if (dealer_turn && !dealer_done) {
     }
 
     dealer_done = true;
+}
+if (game_state == "win") {
+    global.player_money += global.current_bet * 2;
+    global.current_bet = 0;
+} else if (game_state == "tie") {
+    global.player_money += global.current_bet;
+    global.current_bet = 0;
+} else if (game_state == "lose" || game_state == "bust") {
+    // Player lost, already deducted bet during "betting" stage
+    global.current_bet = 0;
 }

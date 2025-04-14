@@ -98,3 +98,15 @@ if (stand_blocked) {
     draw_set_color(c_red);
     draw_text(550, 365, "You must draw at least 2 cards before standing.");
 }
+
+//betting sytem
+draw_set_color(c_white);
+draw_text(20, 20, "Current Amount of Chips: $" + string(global.player_money));
+draw_text(20, 50, "Current Bet: $" + string(global.current_bet));
+
+// Show betting prompt
+if (game_state == "betting") {
+    draw_set_color(c_lime);
+    draw_text(20, 80, "Place your bet! Use LEFT/RIGHT Arrows to adjust, ENTER to confirm.");
+}
+
