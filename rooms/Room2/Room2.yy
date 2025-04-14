@@ -25,9 +25,15 @@
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_4ADEAF75","properties":[],"isDnd":false,"objectId":{"name":"Dist1","path":"objects/Dist1/Dist1.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.15,"scaleY":0.15,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":800.0,"y":576.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_10EC67A7","properties":[],"isDnd":false,"objectId":{"name":"CoinSlotP","path":"objects/CoinSlotP/CoinSlotP.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.25,"scaleY":0.25,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":672.0,"y":512.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_3A59CD98","properties":[],"isDnd":false,"objectId":{"name":"CoinSlotO","path":"objects/CoinSlotO/CoinSlotO.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.25,"scaleY":0.25,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":672.0,"y":320.0,},
+<<<<<<< HEAD
+=======
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_11C1A638","properties":[],"isDnd":false,"objectId":{"name":"CoinS","path":"objects/CoinS/CoinS.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.44,"scaleY":0.44,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":666.0,"y":514.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_2A378F28","properties":[],"isDnd":false,"objectId":{"name":"CoinS","path":"objects/CoinS/CoinS.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.44,"scaleY":0.44,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":676.0,"y":514.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_7A249CD6","properties":[],"isDnd":false,"objectId":{"name":"InPlayMusicPlayer","path":"objects/InPlayMusicPlayer/InPlayMusicPlayer.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":1312.0,"y":0.0,},
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1eff2d95ad4b00ddd268f5bff14eb9099d2c0bdd
+>>>>>>> Stashed changes
       ],"visible":true,"depth":0,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
     {"resourceType":"GMRBackgroundLayer","resourceVersion":"1.0","name":"Background","spriteId":{"name":"sBackground","path":"sprites/sBackground/sBackground.yy",},"colour":4294967295,"x":0,"y":0,"htiled":false,"vtiled":false,"hspeed":0.0,"vspeed":0.0,"stretch":false,"animationFPS":30.0,"animationSpeedType":0,"userdefinedAnimFPS":false,"visible":true,"depth":100,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritVisibility":true,"inheritSubLayers":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"effectEnabled":true,"effectType":null,"properties":[],},
   ],
@@ -43,9 +49,15 @@
     {"name":"inst_4ADEAF75","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_10EC67A7","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_3A59CD98","path":"rooms/Room2/Room2.yy",},
+<<<<<<< HEAD
+=======
     {"name":"inst_11C1A638","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_2A378F28","path":"rooms/Room2/Room2.yy",},
     {"name":"inst_7A249CD6","path":"rooms/Room2/Room2.yy",},
+<<<<<<< Updated upstream
+=======
+>>>>>>> 1eff2d95ad4b00ddd268f5bff14eb9099d2c0bdd
+>>>>>>> Stashed changes
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
