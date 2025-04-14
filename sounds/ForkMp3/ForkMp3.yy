@@ -14,8 +14,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "ForkMp3",
-  "duration": 0.0,
+  "soundFile": "ForkMp3.mp3",
+  "duration": 1.285292,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",

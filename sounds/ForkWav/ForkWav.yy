@@ -14,8 +14,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "ForkWav",
-  "duration": 0.0,
+  "soundFile": "ForkWav.wav",
+  "duration": 1.209542,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",
