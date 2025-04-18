@@ -17,9 +17,18 @@ for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
     var card_index = dealer_hand[| i];
     var dx = 250 + (i * 130);
     var dy = y - 150;
-    draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
-	//audio_play_sound(snd_CardDrawn, 0, false);
+
+    // Check if this is the first card and if it's hidden
+    if (i == 0 && !dealer_revealed) {
+        // Draw the back of the card (hidden)
+        draw_sprite_ext(sCardBack_1, 0, dx, dy, 0.2, 0.2, 0, c_white, 1);  // Back of card (flipped)
+    } else {
+        // Draw the actual card for all other cards
+        draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);  // Revealed card
+    }
+	//audio_play_sound(snd_CardDrawn,0,false); 
 }
+
 
 // Draw dealer total
 draw_set_color(c_white);

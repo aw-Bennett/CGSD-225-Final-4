@@ -312,6 +312,8 @@ if (keyboard_check_pressed(ord("R"))) {
     with (CoinS) {
         instance_destroy();
     }
+	// Reset the dealer's first card
+    dealer_revealed = false;  
 
     // Reset all game state variables
     hand_total = 0;
@@ -380,6 +382,9 @@ if (dealer_turn && !dealer_done) {
         }
     }
 
+    // Reveal the dealer's hidden card (first card) after dealer's turn is finished
+    dealer_revealed = true; // Flip the first card
+
     // Determine the result of the game after dealer's turn
     if (dealer_total > 21) {
         game_state = "win"; // Dealer busts, player wins
@@ -391,8 +396,9 @@ if (dealer_turn && !dealer_done) {
         game_state = "tie"; // Tie game
     }
 
-    dealer_done = true;
+    dealer_done = true; // End dealer's turn
 }
+
 if (game_state == "win") {
     global.player_money += global.current_bet * 2;
     global.current_bet = 0;

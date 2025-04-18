@@ -21,6 +21,9 @@ dealer_hand = ds_list_create();
 dealer_total = 0;  
 dealer_turn = false; 
 dealer_done = false; 
+dealer_revealed = false;
+dealer_hidden_card_added = false; 
+
 
 split_count = 0;  
 split_prompt = false; 
