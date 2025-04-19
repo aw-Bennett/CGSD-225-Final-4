@@ -29,7 +29,7 @@ if (game_state == "betting") {
     // Spawn coins as needed
     while (coins_exist < coins_should_exist) {
         var x_pos = 20 + (coins_exist * 40); // spread coins horizontally
-        var y_pos = 100; // adjust if needed
+        var y_pos = 450; // adjust if needed
         instance_create_layer(x_pos, y_pos, "Instances", CoinS);
         coins_exist += 1;
     }
@@ -271,6 +271,9 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
         stand_blocked = true;
     }
 }
+if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
+    room_goto(gameroom); // or whatever room you want to go to
+}
 
 // Reset game function (R key)
 if (keyboard_check_pressed(ord("R"))) {
@@ -409,3 +412,62 @@ if (game_state == "win") {
     // Player lost, already deducted bet during "betting" stage
     global.current_bet = 0;
 }
+if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust") && match_result_timer == 0) {
+    match_result_timer = room_speed * 5; // 5 seconds delay 
+}
+
+if (match_result_timer > 0) {
+    match_result_timer -= 1;
+
+    if (match_result_timer == 0) {
+        if (global.player_money <= 0) {
+            game_state = "game_over";
+        } else if (global.player_money >= 2000) {
+            game_state = "game_won";
+        } else {
+			with (CoinS) {
+    instance_destroy();
+}
+
+global.total_chips_bet = 0;
+            // Reset for next betting round
+            initial_draw_done = false;
+            hand_total = 0;
+            dealer_total = 0;
+            dealer_turn = false;
+            dealer_done = false;
+            dealer_revealed = false;
+
+            // Clear hands/lists
+            if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
+            if (ds_exists(dealer_hand, ds_type_list)) ds_list_clear(dealer_hand);
+            if (ds_exists(card_values, ds_type_list)) ds_list_clear(card_values);
+
+            if (variable_global_exists("split_hand_values")) {
+                if (ds_exists(global.split_hand_values, ds_type_list)) ds_list_clear(global.split_hand_values);
+            }
+
+            if (variable_global_exists("split_hands")) {
+                for (var i = 0; i < ds_list_size(split_hands); ++i) {
+                    var sh = split_hands[| i];
+                    if (ds_exists(sh, ds_type_list)) ds_list_destroy(sh);
+                }
+                ds_list_clear(split_hands);
+            }
+
+            split_prompt = false;
+            split_hand_active = false;
+            split_draw_done = false;
+            active_hand = "original";
+            resumed_original_after_split = false;
+            drew_once_post_split = false;
+            show_stand_prompt = false;
+            waiting_for_split_stand = false;
+            stand_blocked = false;
+
+            game_state = "betting";
+        }
+    }
+}
+
+

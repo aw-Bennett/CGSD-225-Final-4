@@ -5,6 +5,7 @@ discard_pile = ds_list_create();
 player_hand = ds_list_create();
 split_hands = ds_list_create();  // Store split hands here
 resumed_original_after_split = false;
+match_result_timer = 0;
 
 CARDS_IN_DECK = 52;
 cards_drawn = 0;
@@ -23,6 +24,9 @@ dealer_turn = false;
 dealer_done = false; 
 dealer_revealed = false;
 dealer_hidden_card_added = false; 
+global.dealer_revealed = false;
+
+
 
 
 split_count = 0;  
