@@ -31,6 +31,7 @@
     {"id":{"name":"sCatTemp","path":"sprites/sCatTemp/sCatTemp.yy",},"order":7,},
     {"id":{"name":"Dist2u","path":"objects/Dist2u/Dist2u.yy",},"order":13,},
     {"id":{"name":"Dist1_1","path":"objects/Dist1_1/Dist1_1.yy",},"order":20,},
+    {"id":{"name":"snd_Cat","path":"sounds/snd_Cat/snd_Cat.yy",},"order":5,},
     {"id":{"name":"Dist1u","path":"objects/Dist1u/Dist1u.yy",},"order":5,},
     {"id":{"name":"sOppoFTemp_1","path":"sprites/sOppoFTemp_1/sOppoFTemp_1.yy",},"order":19,},
     {"id":{"name":"sBackground_1","path":"sprites/sBackground_1/sBackground_1.yy",},"order":23,},
