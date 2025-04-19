@@ -272,7 +272,7 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     }
 }
 if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
-    room_goto(gameroom); // or whatever room you want to go to
+    room_goto(GameRoom); // or whatever room you want to go to
 }
 
 // Reset game function (R key)
