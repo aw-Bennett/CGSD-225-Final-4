@@ -46,6 +46,7 @@ if (game_state == "playing" && !initial_draw_done) {
             var drawn_card = deck[| 0];
             ds_list_delete(deck, 0);
             ds_list_add(player_hand, drawn_card);
+			audio_play_sound(snd_CardDrawn, 0, false);
 
             // Check for Ace
             if (drawn_card mod 13 == 0) {
@@ -79,6 +80,7 @@ if (game_state == "playing" && !initial_draw_done) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
             ds_list_add(dealer_hand, dealer_card);
+			audio_play_sound(snd_CardDrawn, 0, false);
 
             var dealer_card_value = get_card_value(dealer_card, dealer_total);
             if ((dealer_card mod 13 == 0) && (dealer_total + 11 <= 21)) {
@@ -141,6 +143,7 @@ if (game_state == "playing") {
 
             } else {
                 ds_list_add(player_hand, drawn_card);
+				audio_play_sound(snd_CardDrawn, 0, false);
 
                 if (drawn_card mod 13 == 0) {
                     ace_pending = true;
@@ -466,6 +469,7 @@ if (dealer_turn && !dealer_done) {
                 var dealer_card = deck[| 0];
                 ds_list_delete(deck, 0);
                 ds_list_add(dealer_hand, dealer_card);
+				audio_play_sound(snd_CardDrawn, 0, false);
 
                 var dealer_card_value = get_card_value(dealer_card, dealer_total);
                 if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
@@ -483,6 +487,7 @@ if (dealer_turn && !dealer_done) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
             ds_list_add(dealer_hand, dealer_card);
+			audio_play_sound(snd_CardDrawn, 0, false);
 
             var dealer_card_value = get_card_value(dealer_card, dealer_total);
             if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
