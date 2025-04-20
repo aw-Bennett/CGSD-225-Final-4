@@ -24,7 +24,25 @@ dealer_turn = false;
 dealer_done = false; 
 dealer_revealed = false;
 dealer_hidden_card_added = false; 
+
+
 global.dealer_revealed = false;
+global.dealer_reveal_timer = 0;
+global.reveal_timer = 0;
+global.showing_loss_screen = false;
+global.showing_win_screen = false;
+global.showing_bust_screen = false;
+global.game_over = false;
+
+
+
+
+//Timer Stuff
+timer_active = false;
+timer_duration = 60 * room_speed; // 60 seconds
+timer_counter = 0;
+time_expired = false;
+round_timer = 60;
 
 
 
@@ -38,6 +56,7 @@ global.player_money = 1000; // Starting chips for the player
 global.current_bet = 0;    // Current bet total
 global.total_chips_bet = 0;
 global.last_coin_milestone = 0;
+
 //Initiaize deck
 for(var i = 0; i < CARDS_IN_DECK; ++i) {
     ds_list_add(deck, i);

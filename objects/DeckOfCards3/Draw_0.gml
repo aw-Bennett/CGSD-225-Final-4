@@ -24,90 +24,91 @@ draw_rectangle(x_position, y_position, x_position + bar_width, y_position + bar_
 draw_set_color(c_green);  
 draw_rectangle(x_position, y_position, x_position + (bar_width * progress), y_position + bar_height, false);
 
-// Check if the dealer's hand is revealed
+
+
+// Loss condition if out of chips show dealer's final cards first
 if (game_state == "lose" && !global.dealer_revealed) {
-    // Step 2: Draw the dealer's final cards
     var screen_w = display_get_gui_width();
     var screen_h = display_get_gui_height();
 
-    var sprite_w = sprite_get_width(DeckOfCards3);  // Use actual card sprite
-    var sprite_h = sprite_get_height(DeckOfCards3);
-
-    var sprite_x = (screen_w - sprite_w) / 2;
-    var sprite_y = (screen_h - sprite_h) / 2;
-
-    // Draw the dealer's final hand
-    draw_sprite(sArrowD, 0, sprite_x, sprite_y);
-
-    draw_set_color(c_white);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "The dealer wins! Press ENTER to continue.");
-	
-	draw_set_halign(fa_left);
-	draw_set_valign(fa_top);
-
-    // Mark that the dealer's cards are revealed
     global.dealer_revealed = true;
-
-    exit; 
+    global.loss_reveal_timer = current_time;
+    exit;
 }
 
-// After the dealer reveals their cards, check if the player has lost all chips
-if (global.player_money <= 0 && game_state == "lose" && global.dealer_revealed) {
+// Once dealer cards are revealed and you're broke, trigger the loss screen mode
+if (game_state == "lose" && global.dealer_revealed && global.player_money <= 0) {
+    global.showing_loss_screen = true;
+}
+
+// If we're in the loss screen mode, draw it
+if (global.showing_loss_screen) {
     var screen_w = display_get_gui_width();
     var screen_h = display_get_gui_height();
 
-    var sprite_w = sprite_get_width(sArrowD); // Replace with game over sprite/image
-    var sprite_h = sprite_get_height(sArrowD);
-
-    var sprite_x = (screen_w - sprite_w) / 2;
-    var sprite_y = (screen_h - sprite_h) / 2;
-
-    // Display the "You ran out of chips" screen
-    draw_sprite(sArrowD, 0, sprite_x, sprite_y);
-
-    draw_set_color(c_white);
+    draw_set_color(c_red);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "You ran out of chips! Press ENTER to restart.");
-
-    // Reset alignment
+    draw_text(screen_w / 2, screen_h - 60, "You Ran Out OF Chips The Dealer Wins! Press ENTER to continue.");
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
-
-    exit;  
 }
 
-
-
-// Win condition - beat the level
-if (global.player_money >= 2000) {
+// Win Condition if got all chips in level show dealer's final cards first
+if (game_state == "win" && !global.dealer_revealed) {
     var screen_w = display_get_gui_width();
     var screen_h = display_get_gui_height();
 
-    var sprite_w = sprite_get_width(sArrowD);
-    var sprite_h = sprite_get_height(sArrowD);
-
-    var sprite_x = (screen_w - sprite_w) / 2;
-    var sprite_y = (screen_h - sprite_h) / 2;
-
-    draw_sprite(sArrowD, 0, sprite_x, sprite_y);
-
-    // Centered prompt
-    draw_set_color(c_white);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "You Beat The Level Press ENTER to continue");
-
-    // Reset alignment
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_top);
-
+    global.dealer_revealed = true;
+    global.win_reveal_timer = current_time;
     exit;
 }
 
 
+if (game_state == "win" && global.dealer_revealed && global.player_money >= 2000) {
+    global.showing_win_screen = true;
+}
+
+
+if (global.showing_win_screen) {
+    var screen_w = display_get_gui_width();
+    var screen_h = display_get_gui_height();
+
+    draw_set_color(c_lime);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    draw_text(screen_w / 2, screen_h - 60, "You Beat The Level! Press ENTER to continue.");
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
+
+// Bust Condition if got all chips in level show dealer's final cards first
+if (game_state == "bust" && !global.dealer_revealed) {
+    var screen_w = display_get_gui_width();
+    var screen_h = display_get_gui_height();
+
+    global.dealer_revealed = true;
+    global.bust_reveal_timer = current_time;
+    exit;
+}
+
+
+if (game_state == "bust" && global.dealer_revealed) {
+    global.showing_bust_screen = true;
+}
+
+
+if (global.showing_bust_screen) {
+    var screen_w = display_get_gui_width();
+    var screen_h = display_get_gui_height();
+
+    draw_set_color(c_orange);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    draw_text(screen_w / 2, screen_h - 60, "You Bust! The Dealer Wins The Game! Press ENTER to continue.");
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
 
 // Draw the discard pile 
 for (var i = 0; i < ds_list_size(discard_pile); ++i) {
@@ -223,6 +224,29 @@ if (match_result_timer > 0) {
             draw_text(550, 350, "Moving To Next Round!");
             break;
     }
+}
+
+// Timer Display After Betting
+if (round_timer > 0 && game_state != "betting" && !time_expired) {
+    var total_time = 60; // Total time for the round in seconds
+    var time_progress = round_timer / total_time;
+
+    // Timer Text
+    draw_set_color(c_white);
+    draw_text(10, 110, "Time Left In The Round: " + string(ceil(round_timer)) + "s");
+
+    // Timer Bar Background
+    draw_set_color(c_black);
+    draw_rectangle(10, 130, 410, 150, false);
+
+    // Timer Bar Foreground
+    draw_set_color(c_red);
+    draw_rectangle(10, 130, 10 + (400 * time_progress), 150, false);
+
+}
+
+if (time_expired) {
+    draw_text(200, 200, "Time Expired! Press Enter to Retry");
 }
 
 
