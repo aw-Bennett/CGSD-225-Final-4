@@ -1,10 +1,10 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "ArrowD",
+  "name": "ArrowU1",
   "spriteId": {
-    "name": "sArrowD",
-    "path": "sprites/sArrowD/sArrowD.yy",
+    "name": "sArrowU",
+    "path": "sprites/sArrowU/sArrowU.yy",
   },
   "solid": false,
   "visible": true,
