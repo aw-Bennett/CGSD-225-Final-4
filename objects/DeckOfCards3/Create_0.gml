@@ -43,7 +43,10 @@ timer_duration = 60 * room_speed; // 60 seconds
 timer_counter = 0;
 time_expired = false;
 round_timer = 60;
-
+timer_increased = false;
+timer_decreased = false;
+time_change_display = "";
+time_change_timer = 0;
 
 
 
@@ -63,3 +66,5 @@ for(var i = 0; i < CARDS_IN_DECK; ++i) {
 }
 randomize();
 ds_list_shuffle(deck);
+
+

@@ -93,7 +93,7 @@ if (game_state == "bust" && !global.dealer_revealed) {
 }
 
 
-if (game_state == "bust" && global.dealer_revealed) {
+if (game_state == "bust" && global.dealer_revealed && global.player_money <= 0) {
     global.showing_bust_screen = true;
 }
 
@@ -244,12 +244,20 @@ if (round_timer > 0 && game_state != "betting" && !time_expired) {
     draw_rectangle(10, 130, 10 + (400 * time_progress), 150, false);
 
 }
+//Timer alt dsiplay
+if (time_change_timer > 0) {
+    draw_set_color(time_change_display == "+10s" ? c_lime : c_red);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_middle);
+    draw_text(275, 115, time_change_display);
+}
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
 
 if (time_expired) {
     draw_text(200, 200, "Time Expired! Press Enter to Retry");
 }
-
-
 
 
 if (stand_blocked) {
@@ -257,7 +265,7 @@ if (stand_blocked) {
     draw_text(550, 365, "You must draw at least 2 cards before standing.");
 }
 
-//betting sytem
+//Betting System
 draw_set_color(c_white);
 draw_text(10, 60, "Current Amount of Chips Left: $" + string(global.player_money));
 draw_text(10, 85, "Current Bet: $" + string(global.current_bet));

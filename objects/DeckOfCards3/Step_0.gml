@@ -1,4 +1,6 @@
 if (game_state == "betting") {
+	timer_increased = false;
+	timer_decreased = false;
     // Increase/decrease bet
     if (keyboard_check_pressed(vk_right)) {
         if (global.current_bet + 50 <= global.player_money) {
@@ -275,7 +277,7 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     }
 }
 if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
-    room_goto(GameRoom); // or whatever room you want to go to
+    room_goto(MainMenu); // or whatever room you want to go to
 }
 
 //Round Time and Round Transition
@@ -438,20 +440,23 @@ if (keyboard_check_pressed(ord("R"))) {
 	time_expired = false;
 	 timer_active = false;
 	 timer_counter = 0;
-	
+	 timer_increased = false;
+    timer_decreased = false;
+	time_change_display = "";
+    time_change_timer = 0;
     game_state = "betting";
 }
 
 if (global.showing_loss_screen) {
     if (keyboard_check_pressed(vk_enter)) {
         global.showing_loss_screen = false; // Reset flag
-        room_goto(GameRoom); // Change to actual room name
+        room_goto(MainMenu); // Change to actual room name
     }
 }
 
 if (global.showing_bust_screen && keyboard_check_pressed(vk_enter)) {
 	 global.showing_bust_screen = false;
-    room_goto(GameRoom); 
+    room_goto(MainMenu); 
 }
 
 
@@ -516,17 +521,44 @@ if (dealer_turn && !dealer_done) {
 	
 	dealer_turn = false; // if theres issues lol
 }
-
-if (game_state == "win") {
+//New win conditions add and subtract from timer
+if (game_state == "win" && !timer_increased) {
     global.player_money += global.current_bet * 2;
     global.current_bet = 0;
+
+    // Add 10 seconds, but cap it at 60 for now
+    round_timer = min(round_timer + 10, 60);
+
+    timer_increased = true;
+	time_change_display = "+10s";
+    time_change_timer = 120; //amount of frames so 2 seconds
+
 } else if (game_state == "tie") {
     global.player_money += global.current_bet;
     global.current_bet = 0;
+
 } else if (game_state == "lose" || game_state == "bust") {
     // Player lost, already deducted bet during "betting" stage
     global.current_bet = 0;
+
+    if (!timer_decreased) {
+        round_timer = max(0, round_timer - 10);
+        timer_decreased = true;
+	
+		time_change_display = "-10s";
+		time_change_timer = 120;
+    }
 }
+
+if (time_change_timer > 0) {
+    time_change_timer -= 1;
+    if (time_change_timer <= 0) {
+        time_change_display = "";
+    }
+}
+
+
+
 if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust") && match_result_timer == 0) {
     match_result_timer = room_speed * 5; // 5 seconds delay 
 }
