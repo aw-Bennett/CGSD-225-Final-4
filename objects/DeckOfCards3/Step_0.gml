@@ -1,6 +1,7 @@
 if (game_state == "betting") {
 	timer_increased = false;
 	timer_decreased = false;
+	timer_paused = false;
     // Increase/decrease bet
     if (keyboard_check_pressed(vk_right)) {
         if (global.current_bet + 50 <= global.player_money) {
@@ -173,6 +174,8 @@ if (game_state == "playing") {
                 }
             } else if (hand_total > 21) {
                 game_state = "bust";
+				dealer_revealed = true; // Flip dealer's card when player busts
+				dealer_done = true; 
             }
         }
     }
@@ -276,18 +279,20 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
         stand_blocked = true;
     }
 }
+
 if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
     room_goto(MainMenu); // or whatever room you want to go to
 }
 
 //Round Time and Round Transition
-if (round_timer > 0) {
+if (!timer_paused && round_timer > 0) {
     round_timer -= 1 / room_speed; // Counts down 1 second per second
     if (round_timer <= 0) {
         round_timer = 0;
         time_expired = true;
     }
 }
+
 
 //Time Countdown and Reset
 if (time_expired) {
@@ -360,7 +365,8 @@ if (time_expired) {
 
 
 // Reset game function (R key)
-if (keyboard_check_pressed(ord("R"))) {
+if (keyboard_check_pressed(ord("R"))
+ && !(game_state == "win" || game_state == "lose" || game_state == "bust" || game_state == "tie")) {
     // Destroy all player-related data
     if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
     if (ds_exists(dealer_hand, ds_type_list)) ds_list_clear(dealer_hand);
@@ -523,7 +529,13 @@ if (dealer_turn && !dealer_done) {
 }
 //New win conditions add and subtract from timer
 if (game_state == "win" && !timer_increased) {
-    global.player_money += global.current_bet * 2;
+     var payout = global.current_bet * 2;
+
+    if (hand_total == 21) {
+        payout *= 2; // Double payout for a perfect 21
+    }
+
+    global.player_money += payout;
     global.current_bet = 0;
 
     // Add 10 seconds, but cap it at 60 for now
@@ -560,7 +572,8 @@ if (time_change_timer > 0) {
 
 
 if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust") && match_result_timer == 0) {
-    match_result_timer = room_speed * 5; // 5 seconds delay 
+    match_result_timer = room_speed * 3; // 3 seconds delay 
+	 timer_paused = true; // this pauses the timer after the round is over
 }
 
 if (match_result_timer > 0) {

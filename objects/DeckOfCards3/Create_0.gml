@@ -7,6 +7,9 @@ split_hands = ds_list_create();  // Store split hands here
 resumed_original_after_split = false;
 match_result_timer = 0;
 
+
+
+
 CARDS_IN_DECK = 52;
 cards_drawn = 0;
 hand_total = 0;
@@ -47,6 +50,7 @@ timer_increased = false;
 timer_decreased = false;
 time_change_display = "";
 time_change_timer = 0;
+timer_paused = false;
 
 
 
