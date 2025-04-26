@@ -40,6 +40,7 @@
     {"id":{"name":"Dist1u","path":"objects/Dist1u/Dist1u.yy",},"order":5,},
     {"id":{"name":"Sprite29","path":"sprites/Sprite29/Sprite29.yy",},"order":31,},
     {"id":{"name":"sOppoFTemp_1","path":"sprites/sOppoFTemp_1/sOppoFTemp_1.yy",},"order":19,},
+    {"id":{"name":"snd_Cough","path":"sounds/snd_Cough/snd_Cough.yy",},"order":6,},
     {"id":{"name":"sCough","path":"sprites/sCough/sCough.yy",},"order":32,},
     {"id":{"name":"sBackground_1","path":"sprites/sBackground_1/sBackground_1.yy",},"order":23,},
     {"id":{"name":"snd_Fork","path":"sounds/snd_Fork/snd_Fork.yy",},"order":4,},
