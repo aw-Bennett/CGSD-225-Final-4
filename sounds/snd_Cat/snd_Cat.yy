@@ -15,7 +15,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_Cat.mp3",
-  "duration": 4.576708,
+  "duration": 4.597551,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",

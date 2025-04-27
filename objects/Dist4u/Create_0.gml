@@ -9,7 +9,7 @@ with(ArrowD1) {
 x = 249;
 y = 577;
 }*/
-global.DistLevel = 60;
+global.DistLevel = 95;
 DistTimeSource();
 /*with(ArrowU1) {
 x = xstart;
