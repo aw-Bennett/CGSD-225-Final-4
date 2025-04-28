@@ -280,9 +280,6 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
     }
 }
 
-if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
-    room_goto(6); // or whatever room you want to go to
-}
 
 //Round Time and Round Transition
 if (!timer_paused && round_timer > 0) {
@@ -292,69 +289,6 @@ if (!timer_paused && round_timer > 0) {
         time_expired = true;
     }
 }
-
-
-//Time Countdown and Reset
-if (time_expired) {
-    if (keyboard_check_pressed(vk_enter)) {
-        
-        if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
-        if (ds_exists(dealer_hand, ds_type_list)) ds_list_clear(dealer_hand);
-        if (ds_exists(card_values, ds_type_list)) ds_list_clear(card_values);
-
-        if (variable_global_exists("split_hands")) {
-            for (var i = 0; i < ds_list_size(split_hands); ++i) {
-                var sh = split_hands[| i];
-                if (ds_exists(sh, ds_type_list)) ds_list_destroy(sh);
-            }
-            ds_list_clear(split_hands);
-        }
-		
-		  with (CoinS) {
-        instance_destroy();
-    }
-	
-
-        // Reset deck
-        if (ds_exists(deck, ds_type_list)) ds_list_clear(deck);
-        deck = ds_list_create();
-        for (var i = 0; i < 52; ++i) {
-            ds_list_add(deck, i);
-        }
-
-        // Shuffle the deck
-        for (var i = ds_list_size(deck) - 1; i > 0; --i) {
-            var j = irandom(i);
-            var temp = deck[| i];
-            deck[| i] = deck[| j];
-            deck[| j] = temp;
-        }
-
-        // Reset dealer status and flags
-        dealer_revealed = false;
-        dealer_total = 0;
-        dealer_done = false;
-        dealer_turn = false;
-        hand_total = 0;
-        split_count = 0;
-        split_prompt = false;
-        split_hand_active = false;
-        split_draw_done = false;
-        active_hand = "original";
-        resumed_original_after_split = false;
-        drew_once_post_split = false;
-        show_stand_prompt = false;
-        waiting_for_split_stand = false;
-        stand_blocked = false;
-        time_expired = false;
-		
-
-        // Return to betting phase
-          room_restart();
-    }
-}
-
-
 
 // Reset game function (R key)
 if (keyboard_check_pressed(ord("R"))
@@ -445,6 +379,7 @@ if (keyboard_check_pressed(ord("R"))
     game_state = "betting";
 }
 
+//the function that lets you change the room the game goes to after a condition is met with chips win lose or bust
 if (global.showing_loss_screen) {
     if (keyboard_check_pressed(vk_enter)) {
         global.showing_loss_screen = false; // Reset flag
@@ -457,6 +392,16 @@ if (global.showing_bust_screen && keyboard_check_pressed(vk_enter)) {
     room_goto(5);
 }
 
+if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
+    room_goto(6); // or whatever room you want to go to
+}
+
+//time up condition
+if (time_expired) {
+    if (keyboard_check_pressed(vk_enter)) {
+        room_goto(TimeUp); //room you want game to go to
+    }
+}
 
 // Dealer logic
 if (dealer_turn && !dealer_done) {
