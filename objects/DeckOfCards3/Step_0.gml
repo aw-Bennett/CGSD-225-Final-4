@@ -383,7 +383,7 @@ if (keyboard_check_pressed(ord("R"))
 if (global.showing_loss_screen) {
     if (keyboard_check_pressed(vk_enter)) {
         global.showing_loss_screen = false; // Reset flag
-        room_goto(4);// Change to actual room name
+        room_goto(5);// Change to actual room name
     }
 }
 
@@ -399,7 +399,7 @@ if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
 //time up condition
 if (time_expired) {
     if (keyboard_check_pressed(vk_enter)) {
-        room_goto(TimeUp); //room you want game to go to
+        room_goto(4); //room you want game to go to
     }
 }
 
