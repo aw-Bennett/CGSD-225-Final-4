@@ -281,7 +281,7 @@ if (keyboard_check_pressed(ord("S")) && game_state == "playing") {
 }
 
 if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
-    room_goto(MainMenu); // or whatever room you want to go to
+    room_goto(6); // or whatever room you want to go to
 }
 
 //Round Time and Round Transition
@@ -297,14 +297,6 @@ if (!timer_paused && round_timer > 0) {
 //Time Countdown and Reset
 if (time_expired) {
     if (keyboard_check_pressed(vk_enter)) {
-        
-        round_timer = 60;
-        global.total_chips_bet = 0;
-        global.current_bet = 0;
-		global.player_money = 1000;
-        global.player_money -= global.total_chips_bet;
-		
-
         
         if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
         if (ds_exists(dealer_hand, ds_type_list)) ds_list_clear(dealer_hand);
@@ -456,13 +448,13 @@ if (keyboard_check_pressed(ord("R"))
 if (global.showing_loss_screen) {
     if (keyboard_check_pressed(vk_enter)) {
         global.showing_loss_screen = false; // Reset flag
-        room_goto(MainMenu); // Change to actual room name
+        room_goto(4);// Change to actual room name
     }
 }
 
 if (global.showing_bust_screen && keyboard_check_pressed(vk_enter)) {
 	 global.showing_bust_screen = false;
-    room_goto(MainMenu); 
+    room_goto(5);
 }
 
 
