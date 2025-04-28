@@ -1,22 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-/*with(ArrowU1) {
-x = 249;
-y = 538;
-}
-
-with(ArrowD1) {
-x = 249;
-y = 577;
-}*/
-global.DistLevel = 60;
-DistTimeSource();
-/*with(ArrowU1) {
-x = xstart;
-y = ystart;
-}
-
-with(ArrowD1) {
-x = xstart;
-y = ystart;
-}*/
+/// @desc sets dist points & starts timer
+global.DistLevel = 60; //sets the distraction points to 60
+DistTimeSource(); //starts the DistTimeSource script

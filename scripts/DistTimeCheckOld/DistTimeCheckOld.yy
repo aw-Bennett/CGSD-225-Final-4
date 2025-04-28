@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "DistTimeCheck",
+  "name": "DistTimeCheckOld",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
