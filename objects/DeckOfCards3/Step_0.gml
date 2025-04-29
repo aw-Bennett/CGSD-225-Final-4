@@ -31,7 +31,7 @@ if (game_state == "betting") {
 
     // Spawn coins as needed
     while (coins_exist < coins_should_exist) {
-        var x_pos = 20 + (coins_exist * 40); // spread coins horizontally
+        var x_pos = 10 + (coins_exist * 30); // spread coins horizontally
         var y_pos = 450; // adjust if needed
         instance_create_layer(x_pos, y_pos, "Instances", CoinS);
         coins_exist += 1;

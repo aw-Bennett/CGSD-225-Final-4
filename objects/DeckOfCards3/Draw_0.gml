@@ -121,7 +121,7 @@ for (var i = 0; i < ds_list_size(discard_pile); ++i) {
 // Draw dealer's hand
 for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
     var card_index = dealer_hand[| i];
-    var dx = 250 + (i * 130);
+    var dx = 30 + (i * 130);
     var dy = y - 150;
 
     // Check if this is the first card and if it's hidden
@@ -143,7 +143,7 @@ draw_text(350, y + 25, "The Dealer's Total: " + string(dealer_total));
 // Draw player’s main hand
 for (var i = 0; i < ds_list_size(player_hand); ++i) {
     var card_index = player_hand[| i];
-    var dx = 250 + (i * 130);
+    var dx = 30 + (i * 130);
     var dy = y + 170;
     draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
 	//audio_play_sound(snd_CardDrawn, 0, false);
@@ -176,7 +176,7 @@ draw_text(350, y + 125, "The Player's Total: " + string(hand_total));
 // Ace decision prompt
 if (ace_pending) {
     draw_set_color(c_aqua);
-    draw_text(200, 450, "You drew an Ace! Press 1 on the Keyboard for Ace = 1, or 2 on the keyboard for Ace = 11");
+    draw_text(30, 450, "You drew an Ace! Press 1 on the Keyboard for Ace = 1, or 2 on the keyboard for Ace = 11");
 }
 
 // Split prompt
@@ -273,6 +273,6 @@ draw_text(30, 105, "Current Bet: $" + string(global.current_bet));
 // Show betting prompt
 if (game_state == "betting") {
     draw_set_color(c_red);
-    draw_text(200, 450, "Place your bet! Use LEFT/RIGHT Arrows on the keyboard to adjust, press ENTER to confirm.");
+    draw_text(30, 450, "Place your bet! Use LEFT/RIGHT Arrows on the keyboard to adjust, press ENTER to confirm.");
 }
 

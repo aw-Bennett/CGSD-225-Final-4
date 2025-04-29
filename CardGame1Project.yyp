@@ -4,6 +4,7 @@
   "name": "CardGame1Project",
   "resources": [
     {"id":{"name":"Obj_HelpButton","path":"objects/Obj_HelpButton/Obj_HelpButton.yy",},"order":1,},
+    {"id":{"name":"spr_Coin_slot_2","path":"sprites/spr_Coin_slot_2/spr_Coin_slot_2.yy",},"order":45,},
     {"id":{"name":"sArrowD","path":"sprites/sArrowD/sArrowD.yy",},"order":24,},
     {"id":{"name":"sCatuTemp","path":"sprites/sCatuTemp/sCatuTemp.yy",},"order":8,},
     {"id":{"name":"CoinSlotP_1","path":"objects/CoinSlotP_1/CoinSlotP_1.yy",},"order":18,},
