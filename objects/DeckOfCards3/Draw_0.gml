@@ -7,14 +7,14 @@ var maxCardsPerRow = 10;
 // Display Current Goal in Chips
 var goal_chips = 2000;
 draw_set_color(c_lime);
-draw_text(10, 10, "Current Goal: " + string(goal_chips));
+draw_text(30, 25, "Current Goal: " + string(goal_chips));
 
 // Progress bar
 var progress = global.player_money / goal_chips; 
 var bar_width = 400;  // Set the width of the progress bar
 var bar_height = 20;  // Set the height of the progress bar
-var x_position = 10;  // Position of the progress bar on X axis
-var y_position = 35;  // Position of the progress bar on Y axis
+var x_position = 30;  // Position of the progress bar on X axis
+var y_position = 50;  // Position of the progress bar on Y axis
 
 
 draw_set_color(c_black);
@@ -138,7 +138,7 @@ for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
 
 // Draw dealer total
 draw_set_color(c_white);
-draw_text(x, y - 250, "The Dealer's Total: " + string(dealer_total));
+draw_text(350, y + 25, "The Dealer's Total: " + string(dealer_total));
 
 // Draw player’s main hand
 for (var i = 0; i < ds_list_size(player_hand); ++i) {
@@ -171,12 +171,12 @@ if (ds_list_size(split_hands) > 0) {
 }
 
 // Player total (main hand)
-draw_text(x, y + 100, "The Player's Total: " + string(hand_total));
+draw_text(350, y + 125, "The Player's Total: " + string(hand_total));
 
 // Ace decision prompt
 if (ace_pending) {
     draw_set_color(c_aqua);
-    draw_text(x, y - 140, "You drew an Ace! Press 1 on the Keyboard for Ace = 1, or 2 on the keyboard for Ace = 11");
+    draw_text(200, 450, "You drew an Ace! Press 1 on the Keyboard for Ace = 1, or 2 on the keyboard for Ace = 11");
 }
 
 // Split prompt
@@ -194,34 +194,34 @@ if (resumed_original_after_split) {
 // Final result banner
 if (game_state == "win") {
     draw_set_color(c_lime);
-    draw_text(550, 325, "You Won The Round!");
+    draw_text(200, 450, "You Won The Round!");
 } else if (game_state == "lose") {
     draw_set_color(c_red);
-    draw_text(550, 325, "The Dealer Wins This Round!");
+    draw_text(200, 450, "The Dealer Wins This Round!");
 } else if (game_state == "tie") {
     draw_set_color(c_yellow);
-    draw_text(550, 325, "It's a Tie Player Gets Chips Back!");
+    draw_text(200, 450, "It's a Tie Player Gets Chips Back!");
 } else if (game_state == "bust") {
     draw_set_color(c_orange);
-    draw_text(550, 325, "You Bust The Dealer Wins This Round!");
+    draw_text(200, 450, "You Bust The Dealer Wins This Round!");
 } else if (game_state == "stand") {
     draw_set_color(c_aqua);
-    draw_text(550, 325, "You Decided To Stand. Waiting for Dealer...");
+    draw_text(200, 450, "You Decided To Stand. Waiting for Dealer...");
 }
 
 if (match_result_timer > 0) {
     switch (game_state) {
         case "win":
-            draw_text(550, 350, "Moving To Next Round!");
+            draw_text(200, 480, "Moving To Next Round!");
             break;
         case "lose":
-            draw_text(550, 350, "Moving To Next Round!");
+            draw_text(200, 480, "Moving To Next Round!");
             break;
         case "tie":
-            draw_text(550, 350, "Moving To Next Round!");
+            draw_text(200, 480, "Moving To Next Round!");
             break;
         case "bust":
-            draw_text(550, 350, "Moving To Next Round!");
+            draw_text(200, 480, "Moving To Next Round!");
             break;
     }
 }
@@ -233,15 +233,15 @@ if (round_timer > 0 && game_state != "betting" && !time_expired) {
 
     // Timer Text
     draw_set_color(c_white);
-    draw_text(10, 110, "Time Left In The Round: " + string(ceil(round_timer)) + "s");
+    draw_text(30, 130, "Time Left In The Round: " + string(ceil(round_timer)) + "s");
 
     // Timer Bar Background
     draw_set_color(c_black);
-    draw_rectangle(10, 130, 410, 150, false);
+    draw_rectangle(30, 180, 410, 150, false);
 
     // Timer Bar Foreground
     draw_set_color(c_red);
-    draw_rectangle(10, 130, 10 + (400 * time_progress), 150, false);
+    draw_rectangle(30, 180, 10 + (400 * time_progress), 150, false);
 
 }
 //Timer alt dsiplay
@@ -249,30 +249,30 @@ if (time_change_timer > 0) {
     draw_set_color(time_change_display == "+10s" ? c_lime : c_red);
     draw_set_halign(fa_left);
     draw_set_valign(fa_middle);
-    draw_text(275, 115, time_change_display);
+    draw_text(350, 130, time_change_display);
 }
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
 
 if (time_expired) {
-    draw_text(200, 200, "Time Expired! Press Enter to Retry");
+    draw_text(200, 450, "Time Expired! Press Enter to Retry");
 }
 
 
 if (stand_blocked) {
     draw_set_color(c_red);
-    draw_text(550, 365, "You must draw at least 2 cards before standing.");
+    draw_text(200, 450, "You must draw at least 2 cards before standing.");
 }
 
 //Betting System
 draw_set_color(c_white);
-draw_text(10, 60, "Current Amount of Chips Left: $" + string(global.player_money));
-draw_text(10, 85, "Current Bet: $" + string(global.current_bet));
+draw_text(30, 80, "Current Amount of Chips Left: $" + string(global.player_money));
+draw_text(30, 105, "Current Bet: $" + string(global.current_bet));
 
 // Show betting prompt
 if (game_state == "betting") {
-    draw_set_color(c_lime);
-    draw_text(200, 300, "Place your bet! Use LEFT/RIGHT Arrows on the keyboard to adjust, press ENTER to confirm.");
+    draw_set_color(c_red);
+    draw_text(200, 450, "Place your bet! Use LEFT/RIGHT Arrows on the keyboard to adjust, press ENTER to confirm.");
 }
 
