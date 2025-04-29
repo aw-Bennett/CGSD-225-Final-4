@@ -25,6 +25,11 @@ draw_set_color(c_green);
 draw_rectangle(x_position, y_position, x_position + (bar_width * progress), y_position + bar_height, false);
 
 
+//Text that lets player know the max they can bet in a level
+draw_set_color(c_white);
+draw_text(200, 105, "(Max bet in level = 250)");
+
+
 
 // Loss condition if out of chips show dealer's final cards first
 if (game_state == "lose" && !global.dealer_revealed) {
@@ -171,7 +176,7 @@ if (ds_list_size(split_hands) > 0) {
 }
 
 // Player total (main hand)
-draw_text(350, y + 125, "The Player's Total: " + string(hand_total));
+draw_text(350, y + 140, "The Player's Total: " + string(hand_total));
 
 // Ace decision prompt
 if (ace_pending) {
@@ -230,6 +235,7 @@ if (match_result_timer > 0) {
 if (round_timer > 0 && game_state != "betting" && !time_expired) {
     var total_time = 60; // Total time for the round in seconds
     var time_progress = round_timer / total_time;
+    time_progress = clamp(time_progress, 0, 1); // Ensure that time_progress is between 0 and 1
 
     // Timer Text
     draw_set_color(c_white);
@@ -237,27 +243,31 @@ if (round_timer > 0 && game_state != "betting" && !time_expired) {
 
     // Timer Bar Background
     draw_set_color(c_black);
-    draw_rectangle(30, 180, 410, 150, false);
+    draw_rectangle(30, 180, 430, 150, false);
 
     // Timer Bar Foreground
     draw_set_color(c_red);
-    draw_rectangle(30, 180, 10 + (400 * time_progress), 150, false);
-
+    var bar_width = clamp(400 * time_progress, 0, 400); // Ensure bar width does not exceed the black box width
+    draw_rectangle(30, 180, 30 + bar_width, 150, false); 
 }
-//Timer alt dsiplay
+
+// Timer alt display
 if (time_change_timer > 0) {
     draw_set_color(time_change_display == "+10s" ? c_lime : c_red);
     draw_set_halign(fa_left);
     draw_set_valign(fa_middle);
     draw_text(350, 130, time_change_display);
 }
+
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-
+// If time is expired, display the "Time Expired!" message
 if (time_expired) {
+    draw_set_color(c_white);
     draw_text(200, 450, "Time Expired! Press Enter to Retry");
 }
+
 
 
 if (stand_blocked) {

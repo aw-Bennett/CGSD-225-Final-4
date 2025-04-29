@@ -2,12 +2,15 @@ if (game_state == "betting") {
 	timer_increased = false;
 	timer_decreased = false;
 	timer_paused = false;
-    // Increase/decrease bet
+   
+   // Increase/decrease bet change max bet for level
     if (keyboard_check_pressed(vk_right)) {
-        if (global.current_bet + 50 <= global.player_money) {
-            global.current_bet += 50;
-        }
+    if (global.current_bet + 50 <= global.player_money && global.current_bet + 50 <= 250) {
+        global.current_bet += 50;
+    } else if (global.current_bet < 250 && global.player_money >= 250) {
+        global.current_bet = 250;
     }
+}
     if (keyboard_check_pressed(vk_left)) {
         if (global.current_bet - 50 >= 0) {
             global.current_bet -= 50;
@@ -32,7 +35,7 @@ if (game_state == "betting") {
     // Spawn coins as needed
     while (coins_exist < coins_should_exist) {
         var x_pos = 10 + (coins_exist * 30); // spread coins horizontally
-        var y_pos = 450; // adjust if needed
+        var y_pos = 409; // adjust if needed
         instance_create_layer(x_pos, y_pos, "Instances", CoinS);
         coins_exist += 1;
     }
@@ -292,6 +295,7 @@ if (!timer_paused && round_timer > 0) {
 
 // Reset game function (R key)
 if (keyboard_check_pressed(ord("R"))
+&& !time_expired 
  && !(game_state == "win" || game_state == "lose" || game_state == "bust" || game_state == "tie")) {
     // Destroy all player-related data
     if (ds_exists(player_hand, ds_type_list)) ds_list_clear(player_hand);
