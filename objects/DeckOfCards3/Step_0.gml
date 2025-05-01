@@ -34,10 +34,16 @@ if (game_state == "betting") {
 
     // Spawn coins as needed
     while (coins_exist < coins_should_exist) {
-        var x_pos = 10 + (coins_exist * 30); // spread coins horizontally
-        var y_pos = 409; // adjust if needed
+        var x_pos = 865;
+        var y_pos = 200 + (coins_exist * 35); // spread coins vertical
         instance_create_layer(x_pos, y_pos, "Instances", CoinS);
-        coins_exist += 1;
+		
+		CoinS.image_angle = 90; // Flipped the coin upside down
+        
+		coins_exist += 1;
+		
+		audio_play_sound(snd_CoinSoundEffect, 0, false);
+		
     }
 
     // Exit early to block gameplay input while betting
@@ -383,40 +389,45 @@ if (keyboard_check_pressed(ord("R"))
     game_state = "betting";
 }
 
-//the function that lets you change the room the game goes to after a condition is met with chips win lose or bust
+// The function that lets you change the room the game goes to after a losing all chips
 if (global.showing_loss_screen) {
     if (keyboard_check_pressed(vk_enter)) {
         global.showing_loss_screen = false; // Reset flag
-        room_goto(5);// Change to actual room name
+        room_goto(5); // Changes to desired room
     }
 }
 
+// The function that lets you change the room the game goes to after busting and losing all chips
 if (global.showing_bust_screen && keyboard_check_pressed(vk_enter)) {
 	 global.showing_bust_screen = false;
-    room_goto(5);
+    room_goto(5); // Changes to desired room
 }
 
+// The function that lets you change the room the game goes to after getting 2000 chips
 if (global.player_money >= 2000 && keyboard_check_pressed(vk_enter)) {
-    room_goto(6); // or whatever room you want to go to
+    room_goto(6); // Changes to desired room
 }
 
-//time up condition
+// The function that lets you change the room the game goes to after the time has expired
 if (time_expired) {
     if (keyboard_check_pressed(vk_enter)) {
-        room_goto(4); //room you want game to go to
+        room_goto(4); // Changes to desired room
     }
 }
 
 // Dealer logic
 if (dealer_turn && !dealer_done) {
-    // Case 1: If the player stands with a lower score than the dealer, stop dealer's turn
+    
+	// Case 1: If the player stands with a lower score than the dealer, stop dealer's turn
     if (game_state == "stand" && hand_total < dealer_total) {
         dealer_done = true; // Stop dealer from drawing cards
     } 
-    // Case 2: If the player has hit 21, dealer should still draw if under 17
+   
+   // Case 2: If the player has hit 21, dealer should still draw if under 17
     else if (hand_total == 21) {
         if (dealer_total < 17) {
-            // Dealer must draw cards until total >= 17
+            
+			// Dealer must draw cards until total >= 17
             while (dealer_total < 17 && ds_list_size(deck) > 0) {
                 var dealer_card = deck[| 0];
                 ds_list_delete(deck, 0);
@@ -432,15 +443,18 @@ if (dealer_turn && !dealer_done) {
             }
         }
     } 
-    // Case 3: Dealer draws if total < 17 and the player has not yet stood or hit 21
+    
+	// Case 3: Dealer draws if total < 17 and the player has not yet stood or hit 21
     else if (dealer_total < 17) {
-        // Dealer must draw cards until total >= 17
+        
+		// Dealer must draw cards until total >= 17
         while (dealer_total < 17 && ds_list_size(deck) > 0) {
             var dealer_card = deck[| 0];
             ds_list_delete(deck, 0);
             ds_list_add(dealer_hand, dealer_card);
 			audio_play_sound(snd_CardDrawn, 0, false);
-
+			
+			// Dealer decides what value they want the ace to be
             var dealer_card_value = get_card_value(dealer_card, dealer_total);
             if (dealer_card mod 13 == 0 && dealer_total + 11 <= 21) {
                 dealer_card_value = 11; // Ace handling
@@ -468,7 +482,7 @@ if (dealer_turn && !dealer_done) {
 	
 	dealer_turn = false; // if theres issues lol
 }
-//New win conditions add and subtract from timer
+// New win conditions adds and subtracts from timer and doubles payout if player hits 21
 if (game_state == "win" && !timer_increased) {
      var payout = global.current_bet * 2;
 
@@ -479,13 +493,16 @@ if (game_state == "win" && !timer_increased) {
     global.player_money += payout;
     global.current_bet = 0;
 
-    // Add 10 seconds, but cap it at 60 for now
+    // Adds time to the clock if the player wins
     round_timer = min(round_timer + 10, 60);
-
+	
+	// Shows how long added time will be on screen
     timer_increased = true;
 	time_change_display = "+10s";
     time_change_timer = 120; //amount of frames so 2 seconds
+	audio_play_sound(snd_TimeGained, 0, false); // Audio for when you lose 10 seconds
 
+// If there is a tie no time is added
 } else if (game_state == "tie") {
     global.player_money += global.current_bet;
     global.current_bet = 0;
@@ -497,12 +514,15 @@ if (game_state == "win" && !timer_increased) {
     if (!timer_decreased) {
         round_timer = max(0, round_timer - 10);
         timer_decreased = true;
-	
+	 // Decreases time to the clock if the player loses
 		time_change_display = "-10s";
 		time_change_timer = 120;
+		audio_play_sound(snd_CoinsLost, 0, false); // Audio for when you lose coins
+		audio_play_sound(snd_TimeLost, 0, false); // Audio for when you lose 10 seconds
+		
     }
 }
-
+// Updates the timer with added or decreased times
 if (time_change_timer > 0) {
     time_change_timer -= 1;
     if (time_change_timer <= 0) {
@@ -511,10 +531,11 @@ if (time_change_timer > 0) {
 }
 
 
-
+// Sets the speed of the room and adds a 3 seconds dealy before moving to the next round
 if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust") && match_result_timer == 0) {
     match_result_timer = room_speed * 3; // 3 seconds delay 
 	 timer_paused = true; // this pauses the timer after the round is over
+	 
 }
 
 if (match_result_timer > 0) {
@@ -531,7 +552,8 @@ if (match_result_timer > 0) {
 }
 
 global.total_chips_bet = 0;
-            // Reset for next betting round
+            
+			// Reset for next betting round
             initial_draw_done = false;
             hand_total = 0;
             dealer_total = 0;
@@ -565,8 +587,7 @@ global.total_chips_bet = 0;
             show_stand_prompt = false;
             waiting_for_split_stand = false;
             stand_blocked = false;
-
-            game_state = "betting";
+			game_state = "betting";
         }
     }
 }
