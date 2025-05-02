@@ -1,7 +1,7 @@
 {
   "resourceType": "GMSound",
   "resourceVersion": "1.0",
-  "name": "snd_ClockTickingSound",
+  "name": "snd_TimeUp",
   "conversionMode": 0,
   "compression": 0,
   "volume": 1.0,
@@ -14,8 +14,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_ClockTickingSound.mp3",
-  "duration": 62.064,
+  "soundFile": "snd_TimeUp.mp3",
+  "duration": 5.773062,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",

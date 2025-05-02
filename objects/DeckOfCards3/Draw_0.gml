@@ -46,19 +46,25 @@ if (game_state == "lose" && !global.dealer_revealed) {
 // Game state lose
 if (game_state == "lose" && global.dealer_revealed && global.player_money <= 0) {
     global.showing_loss_screen = true;
+	
+		if (!audio_is_playing(snd_Fullyoutofchips)) {
+        audio_play_sound(snd_Fullyoutofchips, 1, false);
+		 global.sound_played = true;
+    }
 }
 
 // Text that lets player know they have ran out of chips and can not continue
 if (global.showing_loss_screen) {
-    var screen_w = display_get_gui_width();
-    var screen_h = display_get_gui_height();
+    
+	// Draw black background behind the text
+    draw_set_color(c_black);
+    draw_rectangle(55, 395, 735, 425, false); 
 
+    // Set color and draw the text
     draw_set_color(c_red);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "You Ran Out OF Chips The Dealer Wins! Press ENTER to continue.");
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+    draw_text(60, 400, "The Dealer Has Beat You And You Ran Out OF Chips! Press ENTER to continue.");
 }
 
 // Win Condition if got all chips in the level show dealer's final cards first
@@ -76,22 +82,22 @@ if (game_state == "win" && global.dealer_revealed && global.player_money >= 2000
     global.showing_win_screen = true;
 
     if (!audio_is_playing(snd_WinSoundEffect)) {
-        audio_play_sound(snd_WinSoundEffect, 1, false);
+        audio_play_sound(snd_WinSoundEffect, 1, false); // Audio when the player hits the goal of 2k chips
     }
 }
 
-
 // The text that tells you that you beat the level
 if (global.showing_win_screen) {
-    var screen_w = display_get_gui_width();
-    var screen_h = display_get_gui_height();
 
+    // Draw black background behind the text
+    draw_set_color(c_black);
+    draw_rectangle(55, 395, 750, 425, false); 
+
+    // Set color and draw the text
     draw_set_color(c_lime);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "You Beat The Level! Press ENTER to continue.");
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+    draw_text(60, 400, "You Beat The Dealer and Taken All The Tables Money! Press ENTER to continue.");
 }
 
 // Bust Condition if got all chips in level show dealer's final cards first
@@ -107,31 +113,38 @@ if (game_state == "bust" && !global.dealer_revealed) {
 // Game state bust
 if (game_state == "bust" && global.dealer_revealed && global.player_money <= 0) {
     global.showing_bust_screen = true;
+	
+	if (!audio_is_playing(snd_Fullyoutofchips)) {
+        audio_play_sound(snd_Fullyoutofchips, 1, false);
+		 global.sound_played = true;
+    }
 }
+
 
 // The text that tells you that you busted and fully ran out of chips
 if (global.showing_bust_screen) {
-    var screen_w = display_get_gui_width();
-    var screen_h = display_get_gui_height();
+	
+	 // Draw black background behind the text
+    draw_set_color(c_black);
+    draw_rectangle(55, 395, 725, 425, false); 
 
+    // Set color and draw the text
     draw_set_color(c_orange);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_text(screen_w / 2, screen_h - 60, "You Bust! The Dealer Wins The Game! Press ENTER to continue.");
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+    draw_text(60, 400, "You Busted And Ran Out Of Chips The Dealer Wins! Press ENTER to continue.");
 }
 
-// Dont worry about this it dosent show up in game but it draws a discard pile
-for (var i = 0; i < ds_list_size(discard_pile); ++i) {
+	// Dont worry about this it dosent show up in game but it draws a discard pile
+	for (var i = 0; i < ds_list_size(discard_pile); ++i) {
     var card_index = discard_pile[| i];
     var dx = -1000;  
     var dy = -1000;  
     draw_sprite_ext(classic_cards_spr, card_index, dx, dy, 0.2, 0.2, 0, c_white, 1);
 }
 
-// Draw dealer's hand
-for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
+	// Draw dealer's hand
+	for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
     var card_index = dealer_hand[| i];
     var dx = 30 + (i * 130);
     var dy = y - 150;
@@ -148,12 +161,12 @@ for (var i = 0; i < ds_list_size(dealer_hand); ++i) {
 }
 
 
-// Draws the dealer's total
-draw_set_color(c_white);
-draw_text(350, y + 25, "The Dealer's Total: " + string(dealer_total));
+	// Draws the dealer's total
+	draw_set_color(c_white);
+	draw_text(350, y + 25, "The Dealer's Total: " + string(dealer_total));
 
-// Draws the player’s main hand
-for (var i = 0; i < ds_list_size(player_hand); ++i) {
+	// Draws the player’s main hand
+	for (var i = 0; i < ds_list_size(player_hand); ++i) {
     var card_index = player_hand[| i];
     var dx = 30 + (i * 130);
     var dy = y + 170;
@@ -182,13 +195,13 @@ if (ds_list_size(split_hands) > 0) {
     }
 }
 
-// Draws players main hand
-draw_set_color(c_black);
-draw_rectangle(15, y + 130, 280, y + 160, false); // Adjust width if needed
+	// Draws players main hand
+	draw_set_color(c_black);
+	draw_rectangle(15, y + 130, 280, y + 160, false); // Adjust width if needed
 
-// Set color and text
-draw_set_color(c_white);
-draw_text(20, y + 135, "The Player's Total Score: " + string(hand_total));
+	// Set color and text
+	draw_set_color(c_white);
+	draw_text(20, y + 135, "The Player's Total Score: " + string(hand_total));
 
 // Text that lets you know you drew an ace and what button to press on the keyboard
 if (ace_pending) {
@@ -256,7 +269,8 @@ if (game_state == "win") {
 }
 
 // Draws timer that Display After Betting
-if (round_timer > 0 && game_state != "betting" && !time_expired) {
+if (round_timer > 0 && (game_state == "betting" || game_state == "playing" || game_state == "win" || game_state == "lose" || game_state == "bust" || game_state == "tie") && !time_expired){
+
     var total_time = 60; // Total time for the round in seconds
     var time_progress = round_timer / total_time;
     time_progress = clamp(time_progress, 0, 1); // Ensure that time_progress is between 0 and 1
@@ -283,19 +297,19 @@ if (time_change_timer > 0) {
     draw_text(445, 185, time_change_display);
 }
 
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
 
 // Draws text that lets player know the time has expired
 if (time_expired) {
 	
 	// Draw black background behind the text
     draw_set_color(c_black);
-    draw_rectangle(245, 445, 570, 475, false); // Adjust as needed
+    draw_rectangle(120, 395, 715, 425, false); // Adjust as needed
     
 	// Set color and text
 	draw_set_color(c_red);
-    draw_text(250, 450, "Time Expired! Press Enter to Retry.");
+    draw_text(125, 400, "Time Expired And The Dealer Made You Leave! Press Enter to Retry!");
 }
 
 // Draws text that lets player know they need 2 cards to stand
@@ -303,17 +317,17 @@ if (stand_blocked) {
     
 	// Draw black background behind the text
     draw_set_color(c_black);
-    draw_rectangle(195, 445, 850, 475, false); // Adjust as needed
+    draw_rectangle(55, 395, 725, 425, false); 
 	
 	// Set color and text
     draw_set_color(c_red);
-    draw_text(200, 450, "You must draw at least 2 cards before standing.");
+    draw_text(200, 450, "You must draw at least 2 cards before standing!");
 }
 
-// Draws text that handles the betting system
-draw_set_color(c_white);
-draw_text(30, 105, "Current Amount of Chips Left: $" + string(global.player_money));
-draw_text(30, 130, "Current Bet: $" + string(global.current_bet));
+	// Draws text that handles the betting system
+	draw_set_color(c_white);
+	draw_text(30, 105, "Current Amount of Chips Left: $" + string(global.player_money));
+	draw_text(30, 130, "Current Bet: $" + string(global.current_bet));
 
 // Draws text that shows the initial betting prompt
 if (game_state == "betting") {
@@ -324,5 +338,5 @@ if (game_state == "betting") {
 	
 	// Set color and text
     draw_set_color(c_white);
-    draw_text(30, 450, "Place Your Bet! Use LEFT/RIGHT Arrows On The Keyboard To Adjust, Press ENTER To Confirm.");
+    draw_text(30, 450, "Place Your Bet! Use LEFT/RIGHT Arrows On The Keyboard To Adjust, Press ENTER To Confirm!");
 }

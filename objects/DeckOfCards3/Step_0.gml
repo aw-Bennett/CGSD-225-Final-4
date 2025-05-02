@@ -7,13 +7,18 @@ if (game_state == "betting") {
     if (keyboard_check_pressed(vk_right)) {
     if (global.current_bet + 50 <= global.player_money && global.current_bet + 50 <= 250) {
         global.current_bet += 50;
-    } else if (global.current_bet < 250 && global.player_money >= 250) {
+		
+		audio_play_sound(snd_Bet_IncreasDecrease, 0, false); // Audio for when you increase a bet
+    
+	} else if (global.current_bet < 250 && global.player_money >= 250) {
         global.current_bet = 250;
     }
 }
     if (keyboard_check_pressed(vk_left)) {
         if (global.current_bet - 50 >= 0) {
             global.current_bet -= 50;
+			
+			audio_play_sound(snd_Bet_IncreasDecrease, 0, false); // Audio for when you decrease a bet
         }
     }
 
@@ -296,8 +301,17 @@ if (!timer_paused && round_timer > 0) {
     if (round_timer <= 0) {
         round_timer = 0;
         time_expired = true;
+		
+		audio_stop_sound(snd_ClockTickingSound); // stops the clock after time is up
+		audio_play_sound(snd_TimeUp, 0, false); // Audio for when time is up
     }
 }
+
+if (game_state == "playing" && !timer_paused && !time_expired && !audio_is_playing(snd_ClockTickingSound)) {
+    
+	audio_play_sound(snd_ClockTickingSound, 0, true); // plays clock timer ticking sound
+}
+
 
 // Reset game function (R key)
 if (keyboard_check_pressed(ord("R"))
@@ -374,6 +388,10 @@ if (keyboard_check_pressed(ord("R"))
 	global.showing_bust_screen = false;
 	 global.bust_reveal_timer = 0; 
 	 
+	 if (audio_is_playing(snd_ClockTickingSound)) {
+    audio_stop_sound(snd_ClockTickingSound);
+}
+	
 	
 	
 	// Reset the timer
@@ -476,6 +494,7 @@ if (dealer_turn && !dealer_done) {
         game_state = "win"; // Player wins
     } else {
         game_state = "tie"; // Tie game
+		audio_play_sound(snd_Tie, 0, false);
     }
 
     dealer_done = true; // End dealer's turn
@@ -500,7 +519,9 @@ if (game_state == "win" && !timer_increased) {
     timer_increased = true;
 	time_change_display = "+10s";
     time_change_timer = 120; //amount of frames so 2 seconds
-	audio_play_sound(snd_TimeGained, 0, false); // Audio for when you lose 10 seconds
+	audio_play_sound(snd_TimeGained, 0, false); // Audio for when you gain 10 seconds
+	audio_play_sound(snd_Winbet_Coinsound, 0, false); // Audio for when you win a bet and collect your chips
+	
 
 // If there is a tie no time is added
 } else if (game_state == "tie") {
@@ -532,13 +553,18 @@ if (time_change_timer > 0) {
 
 
 // Sets the speed of the room and adds a 3 seconds dealy before moving to the next round
-if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust") && match_result_timer == 0) {
-    match_result_timer = room_speed * 3; // 3 seconds delay 
+if ((game_state == "win" || game_state == "lose" || game_state == "tie" || game_state == "bust"||game_state == "stand") && match_result_timer == 0) {
+	
+	if (audio_is_playing(snd_ClockTickingSound)) { // Stops the timer after a condition is met
+        audio_stop_sound(snd_ClockTickingSound);
+    }
+    
+	 match_result_timer = room_speed * 3; // 3 seconds delay 
 	 timer_paused = true; // this pauses the timer after the round is over
 	 
 }
 
-if (match_result_timer > 0) {
+	if (match_result_timer > 0) {
     match_result_timer -= 1;
 
     if (match_result_timer == 0) {
@@ -551,7 +577,7 @@ if (match_result_timer > 0) {
     instance_destroy();
 }
 
-global.total_chips_bet = 0;
+	global.total_chips_bet = 0;
             
 			// Reset for next betting round
             initial_draw_done = false;
