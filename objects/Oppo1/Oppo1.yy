@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "Oppo1",
   "spriteId": {
-    "name": "sOppoFTemp_1",
-    "path": "sprites/sOppoFTemp_1/sOppoFTemp_1.yy",
+    "name": "sOppoF",
+    "path": "sprites/sOppoF/sOppoF.yy",
   },
   "solid": false,
   "visible": true,
