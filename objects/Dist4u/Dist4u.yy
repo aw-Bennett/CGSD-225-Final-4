@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "Dist4u",
   "spriteId": {
-    "name": "sCheersu",
-    "path": "sprites/sCheersu/sCheersu.yy",
+    "name": "sCheers",
+    "path": "sprites/sCheers/sCheers.yy",
   },
   "solid": false,
   "visible": true,

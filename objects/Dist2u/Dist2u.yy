@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "Dist2u",
   "spriteId": {
-    "name": "sForku",
-    "path": "sprites/sForku/sForku.yy",
+    "name": "sFork",
+    "path": "sprites/sFork/sFork.yy",
   },
   "solid": false,
   "visible": true,

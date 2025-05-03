@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "Dist1u",
   "spriteId": {
-    "name": "sCatuTemp",
-    "path": "sprites/sCatuTemp/sCatuTemp.yy",
+    "name": "sCatTemp",
+    "path": "sprites/sCatTemp/sCatTemp.yy",
   },
   "solid": false,
   "visible": true,
