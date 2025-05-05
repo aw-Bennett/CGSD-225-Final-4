@@ -209,6 +209,7 @@ if (game_state == "playing") {
             for (var i = 0; i < ds_list_size(card_values); ++i) {
                 hand_total += card_values[| i];
             }
+			
 
            
             if (hand_total == 21) {
@@ -244,7 +245,8 @@ if (game_state == "playing") {
     }
 }
 
-// Split logic for pressing X
+/*
+// Split logic for pressing X taken out due to space
 if (keyboard_check_pressed(ord("X"))) {
     if (split_count < 3 && ds_list_size(player_hand) == 2) {
         var card1 = player_hand[| 0];
@@ -277,6 +279,7 @@ if (keyboard_check_pressed(ord("X"))) {
         }
     }
 }
+*/
 
 // Handle the flow of splitting and switching hands
 if (split_hand_active && split_draw_done && active_hand == "original" && drew_once_post_split) {

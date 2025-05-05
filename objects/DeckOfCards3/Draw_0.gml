@@ -160,10 +160,13 @@ if (global.showing_bust_screen) {
 	//audio_play_sound(snd_CardDrawn,0,false); 
 }
 
-
+	/* took out dealers total so player dosent get advantage
+	
 	// Draws the dealer's total
 	draw_set_color(c_white);
 	draw_text(350, y + 25, "The Dealer's Total: " + string(dealer_total));
+	
+	*/
 
 	// Draws the player’s main hand
 	for (var i = 0; i < ds_list_size(player_hand); ++i) {
@@ -215,6 +218,7 @@ if (ace_pending) {
     draw_text(30, 450, "You drew an Ace! Press 1 on the Keyboard for Ace = 1, or 2 on the keyboard for Ace = 11");
 }
 
+/*
 // Draws split prompt
 if (split_prompt) {
     draw_set_color(c_yellow);
@@ -226,6 +230,7 @@ if (resumed_original_after_split) {
     draw_set_color(c_yellow);
     draw_text(x, y + 250, "Would you like to stand? Press Y for Yes, N for No.");
 }
+*/
 
 // Draws Final result banner
 if (game_state == "win") {
