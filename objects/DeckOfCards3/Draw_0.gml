@@ -332,11 +332,6 @@ if (stand_blocked) {
 // Draws text that shows the initial betting prompt
 if (game_state == "betting") {
     
-	// Draws black background behind the text
-    draw_set_color(c_black);
-    draw_rectangle(25, 445, 825, 475, false); 
-	
-	// Set color and text
-    draw_set_color(c_white);
-    draw_text(30, 450, "Place Your Bet! Use LEFT/RIGHT Arrows On The Keyboard To Adjust, Press ENTER To Confirm!");
+	//Sets betting pop up to visible
+	layer_set_visible("Inst_Bet", visible);
 }

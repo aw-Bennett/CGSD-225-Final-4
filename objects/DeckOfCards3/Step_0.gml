@@ -28,6 +28,7 @@ if (game_state == "betting") {
             global.total_chips_bet += global.current_bet; //<-- Only add here
             global.player_money -= global.current_bet;
             game_state = "playing";
+			layer_set_visible("Inst_Bet", 0);
         }
     }
 
